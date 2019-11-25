@@ -15,7 +15,11 @@
 <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
     
     <header class="site-navbar py-4 js-sticky-header site-navbar-target" role="banner">
+       
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div>
+                <img src="~/imagem/transferir.png" class="img-fluid" alt="" width="100" height="100">
+            </div> 
             <div class="container">
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -32,13 +36,16 @@
                         </li>
                     </ul>
                 </div>
+
             </div>
+
         </nav>
     </header>
     <div class="site-section">
         <div class="container">
             <main role="main" class="pb-3">
                 @RenderBody()
+
             </main>
         </div>
     </div>
