@@ -1,15 +1,15 @@
 ﻿@model IEnumerable<GestaoDeTarefasIPG.Models.Funcionario>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Funcionarios";
 }
 
-<h1>Index</h1>
+<h1>Funcionarios</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a class="btn btn-primary" asp-action="Create">Criar Novo</a>
 </p>
-<table class="table">
+<table class="table table-dark table-striped">
     <thead>
         <tr>
             <th>
@@ -43,9 +43,9 @@
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.FuncionarioId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.FuncionarioId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.FuncionarioId">Delete</a>
+                <a class="btn btn-warning"asp-action="Edit" asp-route-id="@item.FuncionarioId">Editar</a> 
+                <a class="btn btn-info"asp-action="Details" asp-route-id="@item.FuncionarioId">Detalhes</a> 
+                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.FuncionarioId">Deletar</a>
             </td>
         </tr>
 }

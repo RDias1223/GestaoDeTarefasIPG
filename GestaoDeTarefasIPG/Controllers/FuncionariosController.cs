@@ -33,7 +33,7 @@ namespace GestaoDeTarefasIPG.Controllers
             }
 
             var funcionario = await _context.Funcionario
-                .FirstOrDefaultAsync(m => m.FuncionarioId == id);
+                .SingleOrDefaultAsync(m => m.FuncionarioId == id);
             if (funcionario == null)
             {
                 return NotFound();
@@ -124,7 +124,7 @@ namespace GestaoDeTarefasIPG.Controllers
             }
 
             var funcionario = await _context.Funcionario
-                .FirstOrDefaultAsync(m => m.FuncionarioId == id);
+                .SingleOrDefaultAsync(m => m.FuncionarioId == id);
             if (funcionario == null)
             {
                 return NotFound();
