@@ -59,7 +59,11 @@ namespace GestaoDeTarefasIPG.Controllers
             {
                 _context.Add(funcionario);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+
+                ViewBag.Title = "Funcionario Adicionado com Sucesso";
+                ViewBag.Message = "Novo funcionario criado Sucesso.";
+
+                return View("Sucesso");
             }
             return View(funcionario);
         }
@@ -110,7 +114,10 @@ namespace GestaoDeTarefasIPG.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                ViewBag.Title = "Funcionario Editado com Sucesso";
+                ViewBag.Message = "O funcionario foi editado com Sucesso.";
+
+                return View("Sucesso");
             }
             return View(funcionario);
         }
@@ -139,9 +146,26 @@ namespace GestaoDeTarefasIPG.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var funcionario = await _context.Funcionario.FindAsync(id);
-            _context.Funcionario.Remove(funcionario);
+            if (funcionario == null)
+            {
+                return NotFound();
+            }
+            try
+            {
+
+                _context.Funcionario.Remove(funcionario);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                // Inform the user that we could not delete the author (maybe it has books)
+                return View("ErrorDeleting");
+            }
+
+            ViewBag.Title = "Funcionario Adicionado com Sucesso";
+            ViewBag.Message = "Novo funcionario criado Sucesso.";
+
+            return View("Sucesso");
         }
 
         private bool FuncionarioExists(int id)
