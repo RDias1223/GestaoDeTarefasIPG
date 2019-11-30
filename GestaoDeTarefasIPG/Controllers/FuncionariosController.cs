@@ -162,8 +162,8 @@ namespace GestaoDeTarefasIPG.Controllers
                 return View("ErrorDeleting");
             }
 
-            ViewBag.Title = "Funcionario Adicionado com Sucesso";
-            ViewBag.Message = "Novo funcionario criado Sucesso.";
+            ViewBag.Title = "Funcionario Deletado com Sucesso";
+            ViewBag.Message = "funcionario foi Deletado.";
 
             return View("Sucesso");
         }
