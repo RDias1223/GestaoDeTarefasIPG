@@ -12,16 +12,18 @@ namespace GestaoDeTarefasIPG.Models
         public int ProfessorId { get; set; }
 
 
-        [Required]
+        [Required(ErrorMessage = "Nome é Obrigatório")]
         [StringLength(250)]
         public string Nome { get; set; }
 
 
-        [Required]
+        [Required(ErrorMessage = "Adicione seu Contato")]
+        [RegularExpression(@"(2\d{8})|(9[1236]\d{7})", ErrorMessage = "Contato Incorreto")]
         public int Contato{ get; set; }
 
 
-        [Required]
+        [Required(ErrorMessage = "Adicione seu Email")]
+        [EmailAddress(ErrorMessage = "Email Incorreto")]
         public int Email { get; set; }
 
     }
