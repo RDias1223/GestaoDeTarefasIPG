@@ -24,7 +24,7 @@ namespace GestaoDeTarefasIPG.Models
 
         [Required(ErrorMessage = "Adicione seu Email")]
         [EmailAddress(ErrorMessage = "Email Incorreto")]
-        public int Email { get; set; }
+        public string Email { get; set; }
 
     }
 }
