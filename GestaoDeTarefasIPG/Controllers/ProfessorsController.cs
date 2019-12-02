@@ -60,6 +60,7 @@ namespace GestaoDeTarefasIPG.Controllers
                 _context.Add(professor);
                 await _context.SaveChangesAsync();
 
+                ViewBag.Title = "Adicionado";
                 ViewBag.Message = "Professor criado com Sucesso!";
             
 
@@ -114,7 +115,11 @@ namespace GestaoDeTarefasIPG.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+
+                ViewBag.Title = "Editado";
+                ViewBag.Message = "Professor editado com Sucesso!";
+
+                return View("Sucesso");
             }
             return View(professor);
         }
@@ -145,7 +150,12 @@ namespace GestaoDeTarefasIPG.Controllers
             var professor = await _context.Professor.FindAsync(id);
             _context.Professor.Remove(professor);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+
+            ViewBag.Title = "Apagado";
+            ViewBag.Message = "Professor apagado com Sucesso!";
+
+
+            return View("Sucesso");
         }
 
         private bool ProfessorExists(int id)
