@@ -60,7 +60,7 @@ namespace GestaoDeTarefasIPG.Controllers
                 _context.Add(funcionario);
                 await _context.SaveChangesAsync();
 
-                ViewBag.Title = "Funcionario Adicionado com Sucesso";
+                ViewBag.Title = " Adicionado!";
                 ViewBag.Message = "Novo funcionario criado Sucesso.";
 
                 return View("Sucesso");
@@ -114,7 +114,7 @@ namespace GestaoDeTarefasIPG.Controllers
                         throw;
                     }
                 }
-                ViewBag.Title = "Funcionario Editado com Sucesso";
+                ViewBag.Title = "Editado!";
                 ViewBag.Message = "O funcionario foi editado com Sucesso.";
 
                 return View("Sucesso");
@@ -146,6 +146,8 @@ namespace GestaoDeTarefasIPG.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var funcionario = await _context.Funcionario.FindAsync(id);
+
+
             if (funcionario == null)
             {
                 return NotFound();
@@ -158,12 +160,12 @@ namespace GestaoDeTarefasIPG.Controllers
             }
             catch
             {
-                // Inform the user that we could not delete the author (maybe it has books)
+               
                 return View("ErrorDeleting");
             }
 
-            ViewBag.Title = "Funcionario Deletado com Sucesso";
-            ViewBag.Message = "funcionario foi Deletado.";
+            ViewBag.Title = " Deletado!";
+            ViewBag.Message = "Funcionario Deletado com  Sucesso.";
 
             return View("Sucesso");
         }
