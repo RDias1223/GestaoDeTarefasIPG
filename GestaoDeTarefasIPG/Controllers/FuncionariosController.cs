@@ -10,16 +10,20 @@ using GestaoDeTarefasIPG.Models;
 namespace GestaoDeTarefasIPG.Controllers
 {
     public class FuncionariosController : Controller
+
     {
+        private const int Tamanho_Pagina = 5;
+        private const int PaginaAntesDepois = 0;
         private readonly GestaoDeTarefasDbContext _context;
 
         public FuncionariosController(GestaoDeTarefasDbContext context)
         {
+            
             _context = context;
         }
 
         // GET: Funcionarios
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int pagina=1)
         {
             return View(await _context.Funcionario.ToListAsync());
         }
