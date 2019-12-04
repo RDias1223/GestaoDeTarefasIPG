@@ -8,9 +8,8 @@ namespace GestaoDeTarefasIPG.Models
     public class FuncionarioViewModels
     {
         public IEnumerable<Funcionario> Funcionarios { get; set; }
-
-    
+            
         public PaginaViewModels Paginacao { get; set; }
-        public int NomeCorrente { get; set; }
+        public string NomeCorrente { get; set; }
     }
 }

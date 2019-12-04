@@ -13,7 +13,7 @@ namespace GestaoDeTarefasIPG.Controllers
 
     {
         private const int Tamanho_Pagina = 5;
-        private const int PaginaAntesDepois = 0;
+
         private readonly GestaoDeTarefasDbContext _context;
 
         public FuncionariosController(GestaoDeTarefasDbContext context)
@@ -23,10 +23,65 @@ namespace GestaoDeTarefasIPG.Controllers
         }
 
         // GET: Funcionarios
-        public async Task<IActionResult> Index(int pagina=1)
+        public async Task<IActionResult> Index(FuncionarioViewModels modelo = null, int pagina = 1, string nome = null)
         {
+            if (modelo != null || modelo.NomeCorrente != null)
+            {
+                nome = modelo.NomeCorrente;
+                pagina = 1;
+            }
+            IQueryable<Funcionario>funcionario;
+            int numfuncionario;
+            IEnumerable<Funcionario> listaFuncionario;
 
-            return View(await _context.Funcionario.OrderBy(p=>p.Nome).ToListAsync());
+            if (!string.IsNullOrEmpty(nome)) //Pesquisa por nome
+            {
+                funcionario = _context.Funcionario
+                    .Where(e => e.Nome.Contains(nome.Trim()));
+
+                numfuncionario = await funcionario.CountAsync();
+
+                listaFuncionario = await funcionario
+                    .OrderBy(p => p.Nome)
+                    .Skip(Tamanho_Pagina * (pagina - 1))
+                    .Take(Tamanho_Pagina)
+                    .ToListAsync();
+            }
+            else
+            {
+
+                funcionario = _context.Funcionario;
+
+
+                numfuncionario = await funcionario.CountAsync();
+
+                listaFuncionario = await funcionario
+                    .OrderBy(p => p.Nome)
+                    .Skip(Tamanho_Pagina * (pagina - 1))
+                    .Take(Tamanho_Pagina)
+                    .ToListAsync();
+            }
+            if (pagina> (numfuncionario / Tamanho_Pagina) + 1)
+            {
+                pagina = 1;
+            }
+            if (listaFuncionario.Count() == 0)
+            {
+                TempData["NoItemsFound"] = "Não foram encontrados resultados para a sua pesquisa";
+            }
+
+
+            return View(new FuncionarioViewModels { 
+                Funcionarios= listaFuncionario,
+                Paginacao=new PaginaViewModels
+                {
+                    PaginaCorrente=pagina,
+                    TamanhoPagina=Tamanho_Pagina,
+                    TotalItens=numfuncionario,
+                    Nome=nome
+                },
+                NomeCorrente=nome
+               });
         }
 
         // GET: Funcionarios/Details/5
