@@ -1,5 +1,5 @@
-﻿@model IEnumerable<GestaoDeTarefasIPG.Models.Funcionario>
-
+﻿@*@model IEnumerable<GestaoDeTarefasIPG.Models.Funcionario>*@
+@model FuncionarioViewModels
 @{
     ViewData["Title"] = "Funcionarios";
 }
@@ -9,26 +9,26 @@
 <p>
     <a class="btn btn-primary" asp-action="Create">Criar Novo</a>
 </p>
+<form asp-action="Index">
+    <div>
+        <h3>Pesquisa</h3>
+        <menu>
+            <h5>Nome do Funcionario:<input style="width:250px;" asp-for="NomeCorrente" /></h5> <input type="submit" value="Pesquisar" class="btn btn-info" />
+        </menu>
+       
+    </div>
+</form>
 <table class="table table-dark table-striped">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Nome)
+                @Html.DisplayNameFor(model => model.NomeCorrente)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Morada)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Contacto)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th></th>
+          
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model.Funcionarios) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Nome)
@@ -51,3 +51,11 @@
 }
     </tbody>
 </table>
+<div page-model="@Model.Paginacao"
+     page-action="Index"
+     page-classes-enabled="true"
+     page-class="btn"
+     page-class-normal="btn-default"
+     page-class-selected="btn-primary"
+     class="btn-group pull-right">
+</div>
