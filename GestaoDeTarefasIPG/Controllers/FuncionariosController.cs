@@ -25,7 +25,8 @@ namespace GestaoDeTarefasIPG.Controllers
         // GET: Funcionarios
         public async Task<IActionResult> Index(int pagina=1)
         {
-            return View(await _context.Funcionario.ToListAsync());
+
+            return View(await _context.Funcionario.OrderBy(p=>p.Nome).ToListAsync());
         }
 
         // GET: Funcionarios/Details/5
@@ -167,7 +168,7 @@ namespace GestaoDeTarefasIPG.Controllers
                
                 return View("ErrorDeleting");
             }
-
+           
             ViewBag.Title = " Deletado!";
             ViewBag.Message = "Funcionario Deletado com  Sucesso.";
 

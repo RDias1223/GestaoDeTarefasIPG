@@ -9,9 +9,8 @@ namespace GestaoDeTarefasIPG.Models
     {
         public IEnumerable<Funcionario> Funcionarios { get; set; }
 
-        public int PaginaCorrente { get; set; }
-        public int TotalPagina { get; set; }
-        public int PrimeiraPagMortrar { get; set; }
-        public int UltimaPagMostrar { get; set; }
+    
+        public PaginaViewModels Paginacao { get; set; }
+        public int NomeCorrente { get; set; }
     }
 }

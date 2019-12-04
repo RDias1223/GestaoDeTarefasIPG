@@ -13,6 +13,8 @@ namespace GestaoDeTarefasIPG.Models
         [Required(ErrorMessage = "Por favor, introduza o nome")]
         [StringLength(maximumLength: 50, MinimumLength = 3)]
         public string Nome { get; set; }
+
+        [Required(ErrorMessage = "Por favor, introduza o Morada")]
         public string Morada { get; set; }
 
         [Required(ErrorMessage = "Por favor, introduza o seu número de telemóvel/telefone")]
