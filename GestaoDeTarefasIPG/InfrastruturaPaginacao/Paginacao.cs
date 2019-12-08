@@ -15,7 +15,21 @@ namespace GestaoDeTarefasIPG.InfrastruturaPaginacao
     [HtmlTargetElement("div",Attributes="modelo-pagina")]
     public class Paginacao : TagHelper
     {
-      
+        private readonly int MaxLinkPorPag = 10;
+
+        public PaginaViewModels ModeloPagina { get; set; }
+
+        public string AccaoDaPagin { get; set; }
+
+        private IUrlHelperFactory urlHelperFactory;
+
+        [ViewContext]
+        [HtmlAttributeNotBound]
+        public ViewContext ViewContext { get; set; }
+        public Paginacao(IUrlHelperFactory urlHelperFactory)
+        {
+            this.urlHelperFactory = urlHelperFactory;
+        }
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
            
