@@ -14,6 +14,7 @@ namespace GestaoDeTarefasIPG.Controllers
     {
         private const int Tamanho_Pagina = 5;
 
+
         private readonly GestaoDeTarefasDbContext _context;
 
         public FuncionariosController(GestaoDeTarefasDbContext context)
@@ -37,7 +38,7 @@ namespace GestaoDeTarefasIPG.Controllers
             if (!string.IsNullOrEmpty(nome)) //Pesquisa por nome
             {
                 funcionario = _context.Funcionario
-                    .Where(e => e.Nome.Contains(nome.Trim()));
+                    .Where(p=> p.Nome.Contains(nome.Trim()));
 
                 numfuncionario = await funcionario.CountAsync();
 
@@ -52,8 +53,7 @@ namespace GestaoDeTarefasIPG.Controllers
 
                 funcionario = _context.Funcionario;
 
-
-                numfuncionario = await funcionario.CountAsync();
+                 numfuncionario = await funcionario.CountAsync();
 
                 listaFuncionario = await funcionario
                     .OrderBy(p => p.Nome)
@@ -68,20 +68,22 @@ namespace GestaoDeTarefasIPG.Controllers
             if (listaFuncionario.Count() == 0)
             {
                 TempData["NoItemsFound"] = "Não foram encontrados resultados para a sua pesquisa";
-            }
+            }   
 
 
             return View(new FuncionarioViewModels { 
                 Funcionarios= listaFuncionario,
-                Paginacao=new PaginaViewModels
+                Paginacao =new PaginaViewModels
                 {
-                    PaginaCorrente=pagina,
-                    TamanhoPagina=Tamanho_Pagina,
-                    TotalItens=numfuncionario,
+                    PaginaCorrente = pagina,
+                    TamanhoPagina = Tamanho_Pagina,
+                    TotalItens = numfuncionario,
+                    
                     Nome=nome
                 },
-                NomeCorrente=nome
-               });
+                NomeCorrente=nome,
+               }
+            );
         }
 
         // GET: Funcionarios/Details/5
@@ -229,7 +231,7 @@ namespace GestaoDeTarefasIPG.Controllers
 
             return View("Sucesso");
         }
-
+    
         private bool FuncionarioExists(int id)
         {
             return _context.Funcionario.Any(e => e.FuncionarioId == id);
