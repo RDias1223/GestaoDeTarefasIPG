@@ -13,7 +13,7 @@
     <div>
         <h3>Pesquisa</h3>
         <menu>
-            <h5>Nome do Funcionario:<input style="width:250px;" asp-for="NomeCorrente" /></h5> <input type="submit" value="Pesquisar" class="btn btn-info" />
+            <h5>Nome do Funcionario:<input style="width:250px;" asp-for="Nome" /></h5> <input type="submit" value="Pesquisar" class="btn btn-info" />
         </menu>
        
     </div>
@@ -22,9 +22,18 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.NomeCorrente)
+                @Html.DisplayNameFor(model => model.Nome)
             </th>
-          
+            <th>
+                @Html.DisplayNameFor(model => model.Morada)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Contacto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+
         </tr>
     </thead>
     <tbody>
@@ -51,7 +60,4 @@
 }
     </tbody>
 </table>
-
-<div modelo-pagina="@Model.Paginacao">
-  
-</div>
+<div modelo-pagina="@Model.Paginacao"></div>

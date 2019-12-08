@@ -24,18 +24,18 @@ namespace GestaoDeTarefasIPG.Controllers
         }
 
         // GET: Funcionarios
-        public async Task<IActionResult> Index(FuncionarioViewModels modelo = null, int pagina = 1, string nome = null)
+        public async Task<IActionResult> Index(FuncionarioViewModels modelo = null, int pagina = 1, string nome = null, string morada=null, string contacto=null, string email=null)
         {
-            if (modelo != null || modelo.NomeCorrente != null)
+            if (modelo != null || modelo.Nome!= null)
             {
-                nome = modelo.NomeCorrente;
+                nome = modelo.Nome;
                 pagina = 1;
             }
             IQueryable<Funcionario>funcionario;
             int numfuncionario;
             IEnumerable<Funcionario> listaFuncionario;
 
-            if (!string.IsNullOrEmpty(nome)) //Pesquisa por nome
+            if (!string.IsNullOrEmpty(nome)) 
             {
                 funcionario = _context.Funcionario
                     .Where(p=> p.Nome.Contains(nome.Trim()));
@@ -60,6 +60,7 @@ namespace GestaoDeTarefasIPG.Controllers
                     .Skip(Tamanho_Pagina * (pagina - 1))
                     .Take(Tamanho_Pagina)
                     .ToListAsync();
+              
             }
             if (pagina> (numfuncionario / Tamanho_Pagina) + 1)
             {
@@ -81,7 +82,10 @@ namespace GestaoDeTarefasIPG.Controllers
                     
                     Nome=nome
                 },
-                NomeCorrente=nome,
+                Nome=nome,
+                Morada=morada,
+                Contacto=contacto,
+                Email=email
                }
             );
         }

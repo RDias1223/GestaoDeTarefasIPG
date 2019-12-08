@@ -8,6 +8,8 @@ using GestaoDeTarefasIPG.Models;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc;
+
 
 namespace GestaoDeTarefasIPG.InfrastruturaPaginacao
 {
@@ -32,7 +34,37 @@ namespace GestaoDeTarefasIPG.InfrastruturaPaginacao
         }
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
-           
+            var urlHelper = urlHelperFactory.GetUrlHelper(ViewContext);
+
+            var resultaDaDiv = new TagBuilder("div");
+
+
+            int pagInicial = ModeloPagina.PaginaCorrente - MaxLinkPorPag / 2;
+            if (pagInicial < 1) pagInicial = 1;
+
+
+            int pagfinal = pagInicial + MaxLinkPorPag - 1;
+            if (pagfinal > ModeloPagina.NumeroPagina) pagfinal = ModeloPagina.NumeroPagina;
+
+
+            for (int p = pagInicial; p <= pagfinal; p++)
+            {
+                var ligacao = new TagBuilder("a");
+                ligacao.Attributes["href"] = urlHelper.Action(AccaoDaPagin, new { pagina = p });
+                ligacao.AddCssClass("btn");
+                if (p == ModeloPagina.PaginaCorrente)
+                {
+                    ligacao.AddCssClass("btn-info");
+                }
+                else
+                {
+                    ligacao.AddCssClass("btn-default");
+                }
+                ligacao.InnerHtml.Append(p.ToString());
+                resultaDaDiv.InnerHtml.AppendHtml(ligacao);
+            }
+
+            output.Content.AppendHtml(resultaDaDiv.InnerHtml); 
         }  
     }
 }
