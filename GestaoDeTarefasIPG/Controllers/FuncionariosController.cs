@@ -29,8 +29,8 @@ namespace GestaoDeTarefasIPG.Controllers
             if (modelo != null || modelo.Nome!= null)
             {
                 nome = modelo.Nome;
-                pagina = 1;
-            }
+             }
+
             IQueryable<Funcionario>funcionario;
             int numfuncionario;
             IEnumerable<Funcionario> listaFuncionario;
@@ -62,10 +62,12 @@ namespace GestaoDeTarefasIPG.Controllers
                     .ToListAsync();
               
             }
-            if (pagina> (numfuncionario / Tamanho_Pagina) + 1)
+            if (pagina>(numfuncionario / Tamanho_Pagina) + 1)
             {
                 pagina = 1;
             }
+
+
             if (listaFuncionario.Count() == 0)
             {
                 TempData["NoItemsFound"] = "Não foram encontrados resultados para a sua pesquisa";
@@ -131,6 +133,7 @@ namespace GestaoDeTarefasIPG.Controllers
 
                 return View("Sucesso");
             }
+
             return View(funcionario);
         }
 

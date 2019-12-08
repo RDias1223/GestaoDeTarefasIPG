@@ -50,16 +50,20 @@ namespace GestaoDeTarefasIPG.InfrastruturaPaginacao
             for (int p = pagInicial; p <= pagfinal; p++)
             {
                 var ligacao = new TagBuilder("a");
-                ligacao.Attributes["href"] = urlHelper.Action(AccaoDaPagin, new { pagina = p });
+
+                ligacao.Attributes["href"] = urlHelper.Action(AccaoDaPagin, new { pagina = p }); 
+
                 ligacao.AddCssClass("btn");
+
                 if (p == ModeloPagina.PaginaCorrente)
                 {
                     ligacao.AddCssClass("btn-info");
                 }
                 else
                 {
-                    ligacao.AddCssClass("btn-default");
+                    ligacao.AddCssClass("btn-primary");
                 }
+
                 ligacao.InnerHtml.Append(p.ToString());
                 resultaDaDiv.InnerHtml.AppendHtml(ligacao);
             }
