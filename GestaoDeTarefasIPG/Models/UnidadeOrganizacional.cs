@@ -20,10 +20,7 @@ namespace GestaoDeTarefasIPG.Models
 
             [Required(ErrorMessage = "Por favor, introduza o email")]
             [EmailAddress(ErrorMessage = "Email inválido")]
-            public string Email { get; set; }
-
-
-        
+            public string Email { get; set; }   
     }
 }
 
