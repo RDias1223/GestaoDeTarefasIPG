@@ -33,6 +33,7 @@ namespace GestaoDeTarefasIPG.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Morada")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nome")
