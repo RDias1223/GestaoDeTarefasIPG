@@ -35,6 +35,7 @@ namespace GestaoDeTarefasIPG.Controllers
             int numfuncionario;
             IEnumerable<Funcionario> listaFuncionario;
 
+
             if (!string.IsNullOrEmpty(nome)) 
             {
                 funcionario = _context.Funcionario
