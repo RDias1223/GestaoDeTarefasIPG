@@ -39,16 +39,24 @@
         </dd>
     </dl>
 
-     <form asp-action="Delete">
+    <form asp-action="Delete">
         <input type="hidden" asp-for="FuncionarioId" />
-        <input type="submit" value="Apagar" class="btn btn-danger" /> |
-        <a asp-action="Index">Voltar à Lista</a>
+        <a href="#Confirmacao" data-toggle="modal" class="btn btn-danger">
+            <span class="glyphicon glyphicon-trash"></span> Eliminar
+        </a>
+       <a asp-action="Index">Voltar à Lista</a>
     </form>
 
     <div id="Confirmacao" class="modal fade">
         <div class="modal-dialog modal-confirm">
             <div class="modal-content">
-
+                <div class="modal-header">
+                    <div class="icon-box">
+                        <i class="material-icons">&#xE5CD;</i>
+                    </div>
+                    <h4 class="modal-title">Vai eliminar permanentemente o Funcionario <b>@Html.DisplayFor(model => model.Nome)</b>.</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
                 <div class="modal-body">
                     <p>Tem a certeza que deseja apagar? </p>
                 </div>
