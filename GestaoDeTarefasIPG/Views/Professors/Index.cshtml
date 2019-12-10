@@ -6,8 +6,20 @@
 
 <h1>Professores</h1>
 
+
+<form class="form-inline my-2 my-lg-0 pl-3-lg">
+
+    <input class="form-control" type="search" placeholder="Pesquisar" aria-label="Search">
+    <button class="btn btn-dark ml-1" type="submit">
+        <img src="~/imagem/icon.png" width="25" height="25" class="d-inline-block align-top" alt="">
+    </button>
+
+</form>
+
+
+
 <p>
-    <a   class="btn btn-outline-primary" asp-action="Create">Criar novo</a>
+    <a class="btn btn-outline-primary" asp-action="Create">Criar novo</a>
 </p>
 <table class="table table-hover table-dark">
     <thead>
@@ -28,26 +40,27 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nome)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Contato)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Morada)
-            </td>
-            <td>
-                <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.ProfessorId">Editar</a> |
-                <a class="btn btn-info" asp-action="Details" asp-route-id="@item.ProfessorId">Detalhes</a> |
-                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.ProfessorId">Deletar</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Contato)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Morada)
+                </td>
+                <td>
+                    <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.ProfessorId">Editar</a> |
+                    <a class="btn btn-info" asp-action="Details" asp-route-id="@item.ProfessorId">Detalhes</a> |
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.ProfessorId">Deletar</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
