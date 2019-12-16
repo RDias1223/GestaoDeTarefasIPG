@@ -24,7 +24,7 @@ namespace GestaoDeTarefasIPG.Controllers
         }
 
         // GET: Funcionarios
-        public async Task<IActionResult> Index(FuncionarioViewModels modelo = null, int pagina = 1, string nome = null, string morada=null, string contacto=null, string email=null)
+        public async Task<IActionResult> Index(FuncionarioViewModels modelo = null, int pagina = 1, string nome = null)
         {
             if (modelo != null || modelo.Nome!= null)
             {
@@ -51,7 +51,6 @@ namespace GestaoDeTarefasIPG.Controllers
             else
             {
 
-                funcionario = _context.Funcionario;
 
                  numfuncionario = await funcionario.CountAsync();
 
@@ -84,10 +83,7 @@ namespace GestaoDeTarefasIPG.Controllers
                     
                     Nome=nome
                 },
-                Nome=nome,
-                Morada=morada,
-                Contacto=contacto,
-                Email=email
+                
                }
             );
         }

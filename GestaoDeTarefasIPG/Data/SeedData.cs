@@ -85,6 +85,8 @@ namespace GestaoDeTarefasIPG.Data
 
                  }
                 );
+            db.SaveChanges();
+
         }
     }
 }
