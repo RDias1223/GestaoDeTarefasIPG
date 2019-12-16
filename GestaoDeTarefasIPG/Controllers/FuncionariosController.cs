@@ -233,7 +233,7 @@ namespace GestaoDeTarefasIPG.Controllers
                
                 return View("ErrorDeleting");
             }
-           
+
             ViewBag.Title = " Deletado!";
             ViewBag.Message = "Funcionario Deletado com  Sucesso.";
 
