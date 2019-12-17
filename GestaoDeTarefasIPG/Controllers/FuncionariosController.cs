@@ -24,7 +24,7 @@ namespace GestaoDeTarefasIPG.Controllers
         }
 
         // GET: Funcionarios
-        public async Task<IActionResult> Index(FuncionarioViewModels modelo = null, int pagina = 1, string nome = null, string morada=null, string contacto=null, string email=null)
+        public async Task<IActionResult> Index(FuncionarioViewModels modelo = null, int pagina = 1, string nome = null)
         {
             if (modelo != null || modelo.Nome!= null)
             {
@@ -85,10 +85,7 @@ namespace GestaoDeTarefasIPG.Controllers
                     
                     Nome=nome
                 },
-                Nome=nome,
-                Morada=morada,
-                Contacto=contacto,
-                Email=email
+             
                }
             );
         }
@@ -114,6 +111,7 @@ namespace GestaoDeTarefasIPG.Controllers
         // GET: Funcionarios/Create
         public IActionResult Create()
         {
+            
             return View();
         }
 
@@ -124,19 +122,44 @@ namespace GestaoDeTarefasIPG.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("FuncionarioId,Nome,Morada,Contacto,Email")] Funcionario funcionario)
         {
+            var email = funcionario.Email;
+            var contacto = funcionario.Contacto;
+
+            if (emailInvalido(email) == true)
+            {
+                //Mensagem de erro se o email for inválido
+                ModelState.AddModelError("Email", "Este email já existe");
+            }
+
+
+            if (contactoInvalido(contacto))
+            {
+                //Mensagem de erro se o nº de CC já existe
+                ModelState.AddModelError("Contacto", "Contacto já existente");
+            }
+           
+
+
+            /********************************/
             if (ModelState.IsValid)
             {
-                _context.Add(funcionario);
-                await _context.SaveChangesAsync();
+                if (!contactoInvalido(contacto) || !emailInvalido(email))
+                {
+                    _context.Add(funcionario);
 
-                ViewBag.Title = " Adicionado!";
-                ViewBag.Message = "Novo funcionario criado Sucesso.";
+                    await _context.SaveChangesAsync();
 
-                return View("Sucesso");
+                    ViewBag.Title = " Adicionado!";
+                    ViewBag.Message = "Novo funcionario criado Sucesso.";
+
+                    return View("Sucesso");
+                }
             }
 
             return View(funcionario);
         }
+
+      
 
         // GET: Funcionarios/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -244,5 +267,44 @@ namespace GestaoDeTarefasIPG.Controllers
         {
             return _context.Funcionario.Any(e => e.FuncionarioId == id);
         }
+
+
+
+        /*return true se o email já existir no DB  */
+        private bool emailInvalido(string email)
+        {
+            bool invalido = false;
+
+            //Procura na BD se existem enfermeiros com o mesmo email
+            var funcionario = from e in _context.Funcionario
+                              where e.Email.Contains(email) 
+                              select e;
+
+            if (!funcionario.Count().Equals(0))
+            {
+                invalido = true;
+            }
+
+            return invalido;
+        }
+
+        private bool contactoInvalido(string contacto)
+        {
+            bool invalido= false;
+
+
+                     var funcionario = from e in _context.Funcionario
+                              where e.Contacto.Contains(contacto)
+                              select e;
+
+            if (!funcionario.Count().Equals(0))
+            {
+                invalido = true;
+            }
+
+            return invalido;
+        }
+
     }
 }
+ 
