@@ -184,16 +184,35 @@ namespace GestaoDeTarefasIPG.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("FuncionarioId,Nome,Morada,Contacto,Email")] Funcionario funcionario)
         {
+            var email = funcionario.Email;
+            var contacto = funcionario.Contacto;
+            var funId = funcionario.FuncionarioId;
             if (id != funcionario.FuncionarioId)
             {
                 return NotFound();
             }
 
+            if (emailInvalidoEdit(email, funId))
+            {
+                //Mensagem de erro se o email já existir
+                ModelState.AddModelError("Email", "Email já existente");
+            }
+
+
+            //Validar Contacto
+            if (contactoInvalidoEdit(contacto,funId))
+            {
+                //Mensagem de erro se o CC já existir
+                ModelState.AddModelError("Contacto", "Contacto já existente");
+            }
+
+
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(funcionario);
+                    if (!contactoInvalidoEdit(contacto,funId) || !emailInvalidoEdit(email, funId))
+                        _context.Update(funcionario);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -214,6 +233,10 @@ namespace GestaoDeTarefasIPG.Controllers
             }
             return View(funcionario);
         }
+
+    
+
+
 
         // GET: Funcionarios/Delete/5
         public async Task<IActionResult> Delete(int? id)
@@ -268,14 +291,14 @@ namespace GestaoDeTarefasIPG.Controllers
             return _context.Funcionario.Any(e => e.FuncionarioId == id);
         }
 
-
+        /*para creat*/
 
         /*return true se o email já existir no DB  */
         private bool emailInvalido(string email)
         {
             bool invalido = false;
 
-            //Procura na BD se existem enfermeiros com o mesmo email
+            //Procura na BD se existem  com o mesmo email
             var funcionario = from e in _context.Funcionario
                               where e.Email.Contains(email) 
                               select e;
@@ -304,7 +327,37 @@ namespace GestaoDeTarefasIPG.Controllers
 
             return invalido;
         }
+        /*+++++++++++++++Edit++++++++++++++++*/
+ private bool emailInvalidoEdit(string email, int funId)
+        {
+            bool invalido = false;
 
+            var funcionario = from e in _context.Funcionario
+                              where e.Email.Contains(email) && e.FuncionarioId != funId
+                              select e;
+
+            if (!funcionario.Count().Equals(0))
+            {
+                invalido = true;
+            }
+
+            return invalido;
+        }
+        private bool contactoInvalidoEdit(string contacto, int funId)
+        {
+            bool invalido = false;
+
+            var funcionario = from e in _context.Funcionario
+                              where e.Contacto.Contains(contacto) && e.FuncionarioId != funId
+                              select e;
+
+            if (!funcionario.Count().Equals(0))
+            {
+                invalido = true;
+            }
+
+            return invalido;
+        }
     }
 }
  
