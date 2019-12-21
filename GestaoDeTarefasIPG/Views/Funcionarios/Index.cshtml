@@ -19,25 +19,32 @@
             <h4 class=" float-right">Nome do Funcionario:</h4>
         </menu>
 
-</div>
-  <p>
-  <a class="btn btn-primary" asp-action="Create">Criar Novo</a>
-</p>
+    </div>
+    <p>
+        <a class="btn btn-primary" asp-action="Create">Criar Novo</a>
+    </p>
 </form>
 <table class="table table-dark table-striped">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Nome)
+                @Html.DisplayNameFor(model => model.Funcionarios.First().Nome)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Morada)
+                @Html.DisplayNameFor(model => model.Funcionarios.First().Endereco)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Contacto)
+                @Html.DisplayNameFor(model => model.Funcionarios.First().CodigoPostal)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Email)
+                @Html.DisplayNameFor(model => model.Funcionarios.First().Data_Nascimento)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Funcionarios.First().Contacto)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Funcionarios.First().Email)
             </th>
 
         </tr>
@@ -50,8 +57,14 @@
                     @Html.DisplayFor(modelItem => item.Nome)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Morada)
+                    @Html.DisplayFor(modelItem => item.Endereco)
                 </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CodigoPostal)
+                </td>
+                <th>
+                    @Html.DisplayFor(model => item.Data_Nascimento)
+                </th>
                 <td>
                     @Html.DisplayFor(modelItem => item.Contacto)
                 </td>

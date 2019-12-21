@@ -120,7 +120,7 @@ namespace GestaoDeTarefasIPG.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("FuncionarioId,Nome,Morada,Contacto,Email")] Funcionario funcionario)
+        public async Task<IActionResult> Create([Bind("FuncionarioId,Nome,Endereco,CodigoPostal,Data_Nascimento,Contacto,Email")] Funcionario funcionario)
         {
             var email = funcionario.Email;
             var contacto = funcionario.Contacto;
@@ -182,7 +182,7 @@ namespace GestaoDeTarefasIPG.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("FuncionarioId,Nome,Morada,Contacto,Email")] Funcionario funcionario)
+        public async Task<IActionResult> Edit(int id, [Bind("FuncionarioId,Nome,Endereco,CodigoPostal,Data_Nascimento,Contacto,Email")] Funcionario funcionario)
         {
             var email = funcionario.Email;
             var contacto = funcionario.Contacto;

@@ -6,7 +6,7 @@
 
 <h1>Delete</h1>
 <div class="alert alert-danger" role="alert">
-    <h3> Tens a certesa que queres apagar o Funcionario?</h3> 
+    <h3> Tens a certesa que queres apagar o Funcionario?</h3>
 </div>
 
 <div>
@@ -20,11 +20,24 @@
             @Html.DisplayFor(model => model.Nome)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Morada)
+            @Html.DisplayNameFor(model => model.Endereco)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Morada)
+            @Html.DisplayFor(model => model.Endereco)
         </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CodigoPostal)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CodigoPostal)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Data_Nascimento)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Data_Nascimento)
+        </dd>
+
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Contacto)
         </dt>
@@ -44,7 +57,7 @@
         <a href="#Confirmacao" data-toggle="modal" class="btn btn-danger">
             <span class="glyphicon glyphicon-trash"></span> Eliminar
         </a>
-       <a asp-action="Index">Voltar à Lista</a>
+        <a asp-action="Index">Voltar à Lista</a>
     </form>
 
     <div id="Confirmacao" class="modal fade">
