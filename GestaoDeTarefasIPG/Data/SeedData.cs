@@ -31,8 +31,8 @@ namespace GestaoDeTarefasIPG.Data
                     Nome = "Fernando Fernandes",
                     Endereco = " Resi Masculina 1 Rua Soeirov Viegas Nº6",
                     CodigoPostal = "6300-758 GUARDA",
-                    Data_Nascimento = new DateTime(1990, 4, 19),
-                    Contacto = "912378563",
+                   Data_Nascimento = new DateTime(1990, 4, 19),
+                    Contacto = "912377773",
                     Email = "FF_R45@gmail.com",
 
 
@@ -137,14 +137,14 @@ namespace GestaoDeTarefasIPG.Data
                            CodigoPostal = "3000-105 Coimbra",
                            Data_Nascimento = new DateTime(1992, 10, 30),
                            Contacto = "967878563",
-                           Email = "barbara_R@sapo.pt",
+                           Email = "hhdfca_R@gmail.com",
 
 
 
                        }
                 );
-            db.SaveChanges();
 
+           // db.SaveChanges();
         }
     }
 }

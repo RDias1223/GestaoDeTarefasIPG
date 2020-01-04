@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace GestaoDeTarefasIPG.Migrations
 {
@@ -13,7 +14,9 @@ namespace GestaoDeTarefasIPG.Migrations
                     FuncionarioId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nome = table.Column<string>(maxLength: 50, nullable: false),
-                    Morada = table.Column<string>(nullable: true),
+                    Endereco = table.Column<string>(maxLength: 50, nullable: false),
+                    CodigoPostal = table.Column<string>(nullable: false),
+                    Data_Nascimento = table.Column<DateTime>(nullable: false),
                     Contacto = table.Column<string>(nullable: false),
                     Email = table.Column<string>(nullable: false)
                 },
