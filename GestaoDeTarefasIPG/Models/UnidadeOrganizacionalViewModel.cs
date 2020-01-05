@@ -7,5 +7,10 @@ namespace GestaoDeTarefasIPG.Models
 {
     public class UnidadeOrganizacionalViewModel
     {
+        public IEnumerable<UnidadeOrganizacional> UnidadeOrganizacionals { get; set; }
+        public PaginaViewModels Pagination { get; set; }
+        public string CurrentName { get; set; }
     }
+
+    
 }
