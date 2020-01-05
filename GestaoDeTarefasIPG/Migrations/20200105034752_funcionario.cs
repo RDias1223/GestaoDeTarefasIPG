@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace GestaoDeTarefasIPG.Migrations
 {
-    public partial class UnidadeOrganizacional : Migration
+    public partial class funcionario : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

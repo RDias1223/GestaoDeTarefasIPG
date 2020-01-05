@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GestaoDeTarefasIPG.Migrations
 {
     [DbContext(typeof(GestaoDeTarefasDbContext))]
-    [Migration("20200104235608_UnidadeOrganizacional")]
-    partial class UnidadeOrganizacional
+    [Migration("20200105034752_funcionario")]
+    partial class funcionario
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
