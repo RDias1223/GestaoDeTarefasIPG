@@ -54,6 +54,30 @@ namespace GestaoDeTarefasIPG.Migrations
 
                     b.ToTable("Funcionario");
                 });
+
+            modelBuilder.Entity("GestaoDeTarefasIPG.Models.UnidadeOrganizacional", b =>
+                {
+                    b.Property<int>("UnidadeOrganizacionalID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Contacto")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UnidadeOrganizacionalID");
+
+                    b.ToTable("UnidadeOrganizacional");
+                });
 #pragma warning restore 612, 618
         }
     }

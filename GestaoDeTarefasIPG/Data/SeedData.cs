@@ -21,7 +21,7 @@ namespace GestaoDeTarefasIPG.Data
 
 
         private static void SeedDataFuncionarios(GestaoDeTarefasDbContext db)
-        {
+        {   /*
             if (db.Funcionario.Any()) return;
 
             db.Funcionario.AddRange(
@@ -144,7 +144,7 @@ namespace GestaoDeTarefasIPG.Data
                        }
                 );
 
-           // db.SaveChanges();
+           // db.SaveChanges();*/
         }
     }
 }

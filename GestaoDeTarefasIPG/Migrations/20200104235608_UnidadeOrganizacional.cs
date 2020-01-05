@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace GestaoDeTarefasIPG.Migrations
 {
-    public partial class funcionario : Migration
+    public partial class UnidadeOrganizacional : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -24,12 +24,30 @@ namespace GestaoDeTarefasIPG.Migrations
                 {
                     table.PrimaryKey("PK_Funcionario", x => x.FuncionarioId);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "UnidadeOrganizacional",
+                columns: table => new
+                {
+                    UnidadeOrganizacionalID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nome = table.Column<string>(nullable: false),
+                    Contacto = table.Column<string>(nullable: false),
+                    Email = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UnidadeOrganizacional", x => x.UnidadeOrganizacionalID);
+                });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
                 name: "Funcionario");
+
+            migrationBuilder.DropTable(
+                name: "UnidadeOrganizacional");
         }
     }
 }
