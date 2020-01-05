@@ -55,11 +55,30 @@ namespace GestaoDeTarefasIPG.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("UnidadeOrganizacionalID,Nome,Contacto,Email")] UnidadeOrganizacional unidadeOrganizacional)
         {
-            if (ModelState.IsValid)
+            var email = unidadeOrganizacional.Email;
+            var contacto = unidadeOrganizacional.Contacto;
+
+            if (emailInvalido(email) == true)
             {
+        
+                ModelState.AddModelError("Email", "O email já existe");
+            }
+
+
+            if (contactoInvalido(contacto) == true)
+            {
+                ModelState.AddModelError("Contacto", "O contacto já existente");
+            }
+
+
+            if (!contactoInvalido(contacto) || !emailInvalido(email))
+            {
+                ViewBag.Title = " Adicionado.";
+                ViewBag.Message = "Unidade Organizacional criada com sucesso.";
+
                 _context.Add(unidadeOrganizacional);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return View("Success");
             }
             return View(unidadeOrganizacional);
         }
@@ -87,6 +106,22 @@ namespace GestaoDeTarefasIPG.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("UnidadeOrganizacionalID,Nome,Contacto,Email")] UnidadeOrganizacional unidadeOrganizacional)
         {
+            var email = unidadeOrganizacional.Email;
+            var contacto = unidadeOrganizacional.Contacto;
+            var uniId = unidadeOrganizacional.UnidadeOrganizacionalID;
+
+            if(emailInvalidoEdit(email, uniId))
+            {
+               
+                ModelState.AddModelError("Email", "O email já existe");
+            }
+
+            if (contactoInvalidoEdit(contacto, uniId))
+            {
+              
+                ModelState.AddModelError("Contacto", "O contacto já existente");
+            }
+
             if (id != unidadeOrganizacional.UnidadeOrganizacionalID)
             {
                 return NotFound();
@@ -110,7 +145,10 @@ namespace GestaoDeTarefasIPG.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+
+                ViewBag.Title = " Adicionado.";
+                ViewBag.Message = "Unidade Organizacional criada com sucesso.";
+                return View("Success");
             }
             return View(unidadeOrganizacional);
         }
@@ -148,5 +186,77 @@ namespace GestaoDeTarefasIPG.Controllers
         {
             return _context.UnidadeOrganizacional.Any(e => e.UnidadeOrganizacionalID == id);
         }
+
+
+        //Base de Dados
+        private bool contactoInvalido(string contacto)
+        {
+            bool invalido = false;
+
+
+            var unidade = from e in _context.UnidadeOrganizacional
+                              where e.Contacto.Contains(contacto)
+                              select e;
+
+            if (!unidade.Count().Equals(0))
+            {
+                invalido = true;
+            }
+
+            return invalido;
+        }
+
+
+        //Base de Dados
+        private bool emailInvalido(string email)
+        {
+            bool invalido = false;
+
+            //Procura na BD se existem  com o mesmo email
+            var unidade = from e in _context.UnidadeOrganizacional
+                              where e.Email.Contains(email)
+                              select e;
+
+            if (!unidade.Count().Equals(0))
+            {
+                invalido = true;
+            }
+
+            return invalido;
+        }
+
+
+        private bool emailInvalidoEdit(string email, int uniId)
+        {
+            bool invalido = false;
+
+            var unidade = from e in _context.UnidadeOrganizacional
+                              where e.Email.Contains(email) && e.UnidadeOrganizacionalID != uniId
+                              select e;
+
+            if (!unidade.Count().Equals(0))
+            {
+                invalido = true;
+            }
+
+            return invalido;
+        }
+        private bool contactoInvalidoEdit(string contacto, int uniId)
+        {
+            bool invalido = false;
+
+            var unidade = from e in _context.UnidadeOrganizacional
+                              where e.Contacto.Contains(contacto) && e.UnidadeOrganizacionalID != uniId
+                              select e;
+
+            if (!unidade.Count().Equals(0))
+            {
+                invalido = true;
+            }
+
+            return invalido;
+        }
     }
 }
+    
+
