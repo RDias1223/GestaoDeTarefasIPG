@@ -11,6 +11,7 @@ namespace GestaoDeTarefasIPG.Controllers
 {
     public class UnidadeOrganizacionalsController : Controller
     {
+        private const int PAGE_SIZE = 12;
         private readonly GestaoDeTarefasDbContext _context;
 
         public UnidadeOrganizacionalsController(GestaoDeTarefasDbContext context)
@@ -19,7 +20,7 @@ namespace GestaoDeTarefasIPG.Controllers
         }
 
         // GET: UnidadeOrganizacionals
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int page = 1)
         {
             return View(await _context.UnidadeOrganizacional.ToListAsync());
         }
