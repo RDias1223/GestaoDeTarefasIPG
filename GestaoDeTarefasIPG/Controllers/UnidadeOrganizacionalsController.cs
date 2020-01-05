@@ -20,9 +20,75 @@ namespace GestaoDeTarefasIPG.Controllers
         }
 
         // GET: UnidadeOrganizacionals
-        public async Task<IActionResult> Index(int page = 1)
+        //Pagination and Search
+        public async Task<IActionResult> Index(UnidadeOrganizacionalViewModel model = null, int page = 1)
         {
-            return View(await _context.UnidadeOrganizacional.ToListAsync());
+            string nome = null;
+
+            if (model != null && model.CurrentName != null)
+            {
+                nome = model.CurrentName.Trim();
+                page = 1;
+            }
+
+            IQueryable<UnidadeOrganizacional> unidadeOrganizacional;
+            int numUnidadeOrganizacional;
+            IEnumerable<UnidadeOrganizacional> listUnidadeOrganizacional;
+
+            if (!string.IsNullOrEmpty(nome))
+            {
+                unidadeOrganizacional = _context.UnidadeOrganizacional
+                    .Where(p => p.Nome.Contains(nome.Trim()));
+
+                numUnidadeOrganizacional = await unidadeOrganizacional.CountAsync();
+
+                listUnidadeOrganizacional = await unidadeOrganizacional
+                    .OrderBy(p => p.Nome)
+                    .Skip(PAGE_SIZE * (page - 1))
+                    .Take(PAGE_SIZE)
+                    .ToListAsync();
+            }
+            else
+            {
+
+                unidadeOrganizacional = _context.UnidadeOrganizacional;
+
+                numUnidadeOrganizacional = await unidadeOrganizacional.CountAsync();
+
+                listUnidadeOrganizacional = await unidadeOrganizacional
+                    .OrderBy(p => p.Nome)
+                    .Skip(PAGE_SIZE * (page - 1))
+                    .Take(PAGE_SIZE)
+                    .ToListAsync();
+
+            }
+
+            if (page > (numUnidadeOrganizacional / PAGE_SIZE) + 1)
+            {
+                page = 1;
+            }
+
+            if (listUnidadeOrganizacional.Count() == 0)
+            {
+                TempData["NoItemsFound"] = "Não foram encontrados resultados para está pesquisa";
+            }
+
+            return View(new UnidadeOrganizacionalViewModel
+            {
+                UnidadeOrganizacional = listUnidadeOrganizacional,
+                Pagination = new PaginaViewModels
+                {
+                    PaginaCorrente = page,
+                    TamanhoPagina = PAGE_SIZE,
+                    TotalItens = numUnidadeOrganizacional,
+
+                    Nome = nome
+                },
+
+            }
+            );
+
+            
         }
 
         // GET: UnidadeOrganizacionals/Details/5
