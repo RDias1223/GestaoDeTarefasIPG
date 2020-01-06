@@ -16,9 +16,8 @@ namespace GestaoDeTarefasIPG.Models
 
 
         [Required(ErrorMessage = "Por favor, introduza o seu Endereço")]
-        [StringLength(maximumLength: 50, MinimumLength = 3)]
-        [RegularExpression(@"^([A-Za-z0-9].*)", ErrorMessage = "Endereço inválido")]
-        public string Endereco { get; set; }
+        [StringLength(maximumLength: 100, MinimumLength = 3)]
+           public string Endereco { get; set; }
 
 
         [Required(ErrorMessage = "Por favor, introduza o seu Codigo Postal")]

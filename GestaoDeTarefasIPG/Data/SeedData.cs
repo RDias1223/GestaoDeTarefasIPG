@@ -21,11 +21,11 @@ namespace GestaoDeTarefasIPG.Data
 
 
         private static void SeedDataFuncionarios(GestaoDeTarefasDbContext db)
-        {   /*
+        {   
             if (db.Funcionario.Any()) return;
 
             db.Funcionario.AddRange(
-                new Funcionario
+            new Funcionario
                 {
 
                     Nome = "Fernando Fernandes",
@@ -42,7 +42,7 @@ namespace GestaoDeTarefasIPG.Data
                  {
 
                      Nome = "Tiago Mota",
-                     Endereco = " AV DA IGREJA  PORTO MOS SAO JOAO BAPTISTA PEDRO, LOTE R1 22 R/C ESQ.",
+                     Endereco = "AV DA IGREJA  PORTO MOS SAO JOAO BAPTISTA PEDRO, LOTE R1 22 R/C ESQ.",
                      CodigoPostal = ", 2480-301 LEIRIA",
                      Data_Nascimento = new DateTime(1980, 4, 19),
                      Contacto = "916378987",
@@ -120,7 +120,7 @@ namespace GestaoDeTarefasIPG.Data
                        {
 
                            Nome = "João Carneiro",
-                           Endereco = " Rua Francisco Sá Carneiro Nº6",
+                           Endereco = "Rua Francisco Sá Carneiro Nº6",
                            CodigoPostal = "6300-225 Guarda",
                            Data_Nascimento = new DateTime(1980, 8, 19),
                            Contacto = "91098563",
@@ -144,7 +144,7 @@ namespace GestaoDeTarefasIPG.Data
                        }
                 );
 
-           // db.SaveChanges();*/
+           db.SaveChanges();
         }
     }
 }
