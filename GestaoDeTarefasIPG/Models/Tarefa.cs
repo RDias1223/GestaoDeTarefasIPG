@@ -14,7 +14,7 @@ namespace GestaoDeTarefasIPG.Models
         [StringLength(maximumLength: 50, MinimumLength = 3)]
         public string Nome{ get; set; }
         [Required(ErrorMessage = "Por favor, introduza o valor da prioridade")]
-        [RegularExpression(@"([0-3]\d{0})", ErrorMessage = "prioridade inválida")]
+        [RegularExpression(@"([0-5]\d{0})", ErrorMessage = "prioridade inválida")]
         public int Prioridade { get; set; }
         
     }
