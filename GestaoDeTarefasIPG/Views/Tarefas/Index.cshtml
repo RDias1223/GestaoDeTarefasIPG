@@ -9,7 +9,7 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
+<table class="table table-dark table-striped">
     <thead>
         <tr>
             <th>
@@ -22,20 +22,21 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nome)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Prioridade)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.TarefaId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.TarefaId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.TarefaId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Prioridade)
+                </td>
+                <td>
+                    <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.TarefaId">Edit</a> |
+                    <a class="btn btn-info" asp-action="Details" asp-route-id="@item.TarefaId">Details</a> |
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.TarefaId">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

@@ -61,7 +61,10 @@ namespace GestaoDeTarefasIPG.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(tarefa);
+            ViewBag.Title = " Adicionado!";
+            ViewBag.Message = "Novo funcionario criado Sucesso.";
+
+            return View("Sucesso");
         }
 
         // GET: Tarefas/Edit/5
@@ -110,7 +113,10 @@ namespace GestaoDeTarefasIPG.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                ViewBag.Title = "Editado!";
+                ViewBag.Message = "O funcionario foi editado com Sucesso.";
+
+                return View("Sucesso");
             }
             return View(tarefa);
         }
@@ -139,9 +145,25 @@ namespace GestaoDeTarefasIPG.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var tarefa = await _context.Tarefa.FindAsync(id);
-            _context.Tarefa.Remove(tarefa);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+
+            if (tarefa == null)
+            {
+                return NotFound();
+            }
+            try
+            {
+                _context.Tarefa.Remove(tarefa);
+                await _context.SaveChangesAsync();
+            }
+            catch
+            {
+
+                return View("ErrorDeleting");
+            }
+            ViewBag.Title = " Deletado!";
+            ViewBag.Message = "Funcionario Deletado com  Sucesso.";
+
+            return View("Sucesso");
         }
 
         private bool TarefaExists(int id)
