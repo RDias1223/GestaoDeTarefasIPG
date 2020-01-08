@@ -58,13 +58,22 @@ namespace GestaoDeTarefasIPG.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ServicoID,Nome,Contacto,UnidadeOrganizacionalID")] Servico servico)
         {
-            if (ModelState.IsValid)
+            var contacto = servico.Contacto;
+
+            if (contactotIvalid(contacto) == true )
             {
+                ModelState.AddModelError("Contacto", "O contacto já existe");
+            }
+
+            if (!contactotIvalid(contacto))
+            {
+                ViewBag.Title = "Adicionado.";
+                ViewBag.Message = "Serviço criado com sucesso.";
+
                 _context.Add(servico);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return View("Sucess");
             }
-            ViewData["UnidadeOrganizacionalID"] = new SelectList(_context.UnidadeOrganizacional, "UnidadeOrganizacionalID", "Contacto", servico.UnidadeOrganizacionalID);
             return View(servico);
         }
 
@@ -154,6 +163,21 @@ namespace GestaoDeTarefasIPG.Controllers
         private bool ServicoExists(int id)
         {
             return _context.Servico.Any(e => e.ServicoID == id);
+        }
+
+        private bool contactotIvalid(string contacto)
+        {
+            bool invalido = false;
+
+            var servico = from e in _context.Servico
+                          where e.Contacto.Contains(contacto)
+                          select e;
+
+            if (!servico.Count().Equals(0))
+            {
+                invalido = true;
+            }
+            return invalido;
         }
     }
 }
