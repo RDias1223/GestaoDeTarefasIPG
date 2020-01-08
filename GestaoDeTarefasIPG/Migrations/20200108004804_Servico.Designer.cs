@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GestaoDeTarefasIPG.Migrations
 {
     [DbContext(typeof(GestaoDeTarefasDbContext))]
-    [Migration("20200108001844_Servico")]
+    [Migration("20200108004804_Servico")]
     partial class Servico
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
