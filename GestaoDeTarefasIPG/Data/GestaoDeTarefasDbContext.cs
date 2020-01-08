@@ -15,4 +15,6 @@ using GestaoDeTarefasIPG.Models;
         public DbSet<GestaoDeTarefasIPG.Models.Funcionario> Funcionario { get; set; }
 
         public DbSet<GestaoDeTarefasIPG.Models.UnidadeOrganizacional> UnidadeOrganizacional { get; set; }
+
+        public DbSet<GestaoDeTarefasIPG.Models.Servico> Servico { get; set; }
     }
