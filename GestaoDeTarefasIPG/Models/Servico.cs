@@ -14,6 +14,7 @@ namespace GestaoDeTarefasIPG.Models
         public string Nome { get; set; }
 
         [Required(ErrorMessage ="Por favor, Introduza o seu número de telemóvel ou telefone")]
+        [RegularExpression(@"(2\d{8})|(9[1236]\d{7})", ErrorMessage = "Contacto inválido")]
         public string Contacto { get; set; }
 
         public int UnidadeOrganizacionalID { get; set;}
