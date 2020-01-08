@@ -16,6 +16,7 @@ namespace GestaoDeTarefasIPG.Models
         [Required(ErrorMessage ="Por favor, Introduza o seu número de telemóvel ou telefone")]
         public string Contacto { get; set; }
 
-       
+        public int UnidadeOrganizacionalID { get; set;}
+        public UnidadeOrganizacional UnidadeOrganizacional { get; set; }
     }
 }
