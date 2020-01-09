@@ -72,7 +72,7 @@ namespace GestaoDeTarefasIPG.Controllers
 
                 _context.Add(servico);
                 await _context.SaveChangesAsync();
-                return View("Sucess");
+                return View("Success");
             }
             return View(servico);
         }
