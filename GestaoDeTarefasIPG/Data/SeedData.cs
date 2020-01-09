@@ -14,6 +14,7 @@ namespace GestaoDeTarefasIPG.Data
         {
 
             SeedDataFuncionarios(db);
+            SeedDataServicoes(db);
 
 
 
@@ -145,6 +146,35 @@ namespace GestaoDeTarefasIPG.Data
                 );
 
            // db.SaveChanges();*/
+        }
+
+        public static void SeedDataServicoes(GestaoDeTarefasDbContext db)
+        {
+            if (db.Servico.Any()) return;
+
+            db.Servico.AddRange(
+                new Servico
+                {
+                    Nome = "Ação Social",
+                    Contacto = "272220123",
+                },
+                new Servico
+                {
+                    Nome = "Serviços Academicos",
+                    Contacto = "272220134",
+                },
+                new Servico
+                {
+                    Nome = "Centro de Informática",
+                    Contacto = "272220145",
+                },
+                new Servico
+                {
+                    Nome = "Comunicação e Divulgação",
+                    Contacto = "272220320"
+
+                }); 
+            db.SaveChanges();
         }
     }
 }
