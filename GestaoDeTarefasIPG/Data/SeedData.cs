@@ -13,16 +13,17 @@ namespace GestaoDeTarefasIPG.Data
         public static void Populate(GestaoDeTarefasDbContext db)
         {
 
-            SeedDataFuncionarios(db);
+            //SeedDataFuncionarios(db);
             SeedDataServicoes(db);
+            SeedDataUnidadeOrganizacional(db);
 
 
 
         }
 
 
-        private static void SeedDataFuncionarios(GestaoDeTarefasDbContext db)
-        {   /*
+        /*private static void SeedDataFuncionarios(GestaoDeTarefasDbContext db)
+        {   
             if (db.Funcionario.Any()) return;
 
             db.Funcionario.AddRange(
@@ -145,36 +146,77 @@ namespace GestaoDeTarefasIPG.Data
                        }
                 );
 
-           // db.SaveChanges();*/
-        }
+           // db.SaveChanges();
+        }*/
 
         public static void SeedDataServicoes(GestaoDeTarefasDbContext db)
         {
             if (db.Servico.Any()) return;
-
+            UnidadeOrganizacional test = GetUnidadeCreatingIfNeed(db, 1);
             db.Servico.AddRange(
                 new Servico
                 {
                     Nome = "Ação Social",
-                    Contacto = "272220123",
+                    Contacto = "272220123",    
+                    UnidadeOrganizacionalID = test.UnidadeOrganizacionalID,
                 },
                 new Servico
                 {
                     Nome = "Serviços Academicos",
                     Contacto = "272220134",
+                    UnidadeOrganizacionalID = test.UnidadeOrganizacionalID,
                 },
                 new Servico
                 {
                     Nome = "Centro de Informática",
                     Contacto = "272220145",
+                    UnidadeOrganizacionalID = test.UnidadeOrganizacionalID,
                 },
                 new Servico
                 {
                     Nome = "Comunicação e Divulgação",
-                    Contacto = "272220320"
+                    Contacto = "272220320",
+                    UnidadeOrganizacionalID = test.UnidadeOrganizacionalID,
 
-                }); 
+                }
+
+               ); 
             db.SaveChanges();
+        }
+
+        
+        public static void SeedDataUnidadeOrganizacional (GestaoDeTarefasDbContext db)
+        {
+            if(db.UnidadeOrganizacional.Any()) return;
+
+            db.UnidadeOrganizacional.AddRange(
+            new UnidadeOrganizacional
+            {
+                Nome = "Test Bernardo",
+                Contacto = "964297400",
+                Email = "Test@gmail.com",
+            },
+            new UnidadeOrganizacional
+            {
+                Nome = "Test Sada",
+                Contacto = "964297500",
+                Email = "TestSada@gmail.com",
+            });
+            db.SaveChanges();
+        }
+
+
+        private static UnidadeOrganizacional GetUnidadeCreatingIfNeed(GestaoDeTarefasDbContext db, int id)
+        {
+            UnidadeOrganizacional test = db.UnidadeOrganizacional.SingleOrDefault(t => t.UnidadeOrganizacionalID == id);
+            
+            if (test == null)
+            {
+                test = new UnidadeOrganizacional { UnidadeOrganizacionalID = id };
+                db.Add(test);
+                db.SaveChanges();
+            }
+            return test;
         }
     }
 }

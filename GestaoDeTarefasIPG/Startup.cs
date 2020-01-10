@@ -79,12 +79,12 @@ namespace GestaoDeTarefasIPG
                 endpoints.MapRazorPages();
             });
 
-            using (var serviceScope = app.ApplicationServices.CreateScope())
+            /*using (var serviceScope = app.ApplicationServices.CreateScope())
             {
                 var db = serviceScope.ServiceProvider.GetService<GestaoDeTarefasDbContext>();
 
                 SeedData.Populate(db);
-            }
+            }*/
         }
     }
 }
