@@ -18,7 +18,7 @@ namespace GestaoDeTarefasIPG.Data
 
 
         }
-        public static async Task EnsurePopulatedAsync (UserManager<IdentityUser> userManag, RoleManager<IdentityRole> roleManager)
+        public static async Task EnsurePopulatedAsync (UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             const string Admin_user = "issoandadificil@gmail.com";
             const string Admin_Password = "sorestatentar";
@@ -36,7 +36,18 @@ namespace GestaoDeTarefasIPG.Data
             }
 
 
+            IdentityUser admin = await userManager.FindByNameAsync(Admin_user);
 
+            if (admin == null)
+            {
+                admin = new IdentityUser { UserName = Admin_user };
+                await userManager.CreateAsync(admin, Admin_Password);
+            }
+
+            if (!await userManager.IsInRoleAsync(admin, "Administrador"))
+            {
+                await userManager.AddToRoleAsync(admin, "Administrador");
+            }
 
 
 
