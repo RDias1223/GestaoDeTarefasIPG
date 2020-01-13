@@ -28,6 +28,24 @@ namespace GestaoDeTarefasIPG.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Funcionario",
+                columns: table => new
+                {
+                    FuncionarioId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nome = table.Column<string>(maxLength: 50, nullable: false),
+                    Endereco = table.Column<string>(maxLength: 100, nullable: false),
+                    CodigoPostal = table.Column<string>(nullable: false),
+                    Data_Nascimento = table.Column<DateTime>(nullable: false),
+                    Contacto = table.Column<string>(nullable: false),
+                    Email = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Funcionario", x => x.FuncionarioId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "UnidadeOrganizacional",
                 columns: table => new
                 {
@@ -42,52 +60,22 @@ namespace GestaoDeTarefasIPG.Migrations
                     table.PrimaryKey("PK_UnidadeOrganizacional", x => x.UnidadeOrganizacionalID);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Funcionario",
-                columns: table => new
-                {
-                    FuncionarioId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Nome = table.Column<string>(maxLength: 50, nullable: false),
-                    Endereco = table.Column<string>(maxLength: 100, nullable: false),
-                    CodigoPostal = table.Column<string>(nullable: false),
-                    Data_Nascimento = table.Column<DateTime>(nullable: false),
-                    Contacto = table.Column<string>(nullable: false),
-                    Email = table.Column<string>(nullable: false),
-                    CargoId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Funcionario", x => x.FuncionarioId);
-                    table.ForeignKey(
-                        name: "FK_Funcionario_Cargo_CargoId",
-                        column: x => x.CargoId,
-                        principalTable: "Cargo",
-                        principalColumn: "CargoId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_Cargo_CargoChefeId",
                 table: "Cargo",
                 column: "CargoChefeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Funcionario_CargoId",
-                table: "Funcionario",
-                column: "CargoId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Cargo");
+
+            migrationBuilder.DropTable(
                 name: "Funcionario");
 
             migrationBuilder.DropTable(
                 name: "UnidadeOrganizacional");
-
-            migrationBuilder.DropTable(
-                name: "Cargo");
         }
     }
 }

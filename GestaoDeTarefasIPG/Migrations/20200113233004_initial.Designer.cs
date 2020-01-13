@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GestaoDeTarefasIPG.Migrations
 {
     [DbContext(typeof(GestaoDeTarefasDbContext))]
-    [Migration("20200113115911_initial")]
+    [Migration("20200113233004_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -49,9 +49,6 @@ namespace GestaoDeTarefasIPG.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CargoId")
-                        .HasColumnType("int");
-
                     b.Property<string>("CodigoPostal")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -78,8 +75,6 @@ namespace GestaoDeTarefasIPG.Migrations
                         .HasMaxLength(50);
 
                     b.HasKey("FuncionarioId");
-
-                    b.HasIndex("CargoId");
 
                     b.ToTable("Funcionario");
                 });
@@ -113,15 +108,6 @@ namespace GestaoDeTarefasIPG.Migrations
                     b.HasOne("GestaoDeTarefasIPG.Models.Cargo", "CargoChefe")
                         .WithMany()
                         .HasForeignKey("CargoChefeId");
-                });
-
-            modelBuilder.Entity("GestaoDeTarefasIPG.Models.Funcionario", b =>
-                {
-                    b.HasOne("GestaoDeTarefasIPG.Models.Cargo", "Cargo")
-                        .WithMany()
-                        .HasForeignKey("CargoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
