@@ -77,6 +77,7 @@ namespace GestaoDeTarefasIPG.Controllers
 
             return View(new FuncionarioViewModels { 
                 Funcionarios= listaFuncionario,
+
                 Paginacao =new PaginaViewModels
                 {
                     PaginaCorrente = pagina,
@@ -99,6 +100,7 @@ namespace GestaoDeTarefasIPG.Controllers
             }
 
             var funcionario = await _context.Funcionario
+                .Include(c => c.Cargo)
                 .SingleOrDefaultAsync(m => m.FuncionarioId == id);
             if (funcionario == null)
             {
@@ -111,7 +113,7 @@ namespace GestaoDeTarefasIPG.Controllers
         // GET: Funcionarios/Create
         public IActionResult Create()
         {
-            
+            ViewData["CargoId"] = new SelectList(_context.Cargo , "CargoId", "Nome");
             return View();
         }
 
@@ -120,7 +122,7 @@ namespace GestaoDeTarefasIPG.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("FuncionarioId,Nome,Endereco,CodigoPostal,Data_Nascimento,Contacto,Email")] Funcionario funcionario)
+        public async Task<IActionResult> Create([Bind("FuncionarioId,Nome,Endereco,CodigoPostal,Data_Nascimento,Contacto,Email,CargoId")] Funcionario funcionario)
         {
             var email = funcionario.Email;
             var contacto = funcionario.Contacto;
@@ -174,6 +176,7 @@ namespace GestaoDeTarefasIPG.Controllers
             {
                 return NotFound();
             }
+            ViewData["Cargo"] = new SelectList(_context.Cargo, "CargoId", "Nome");
             return View(funcionario);
         }
 
@@ -182,7 +185,7 @@ namespace GestaoDeTarefasIPG.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("FuncionarioId,Nome,Endereco,CodigoPostal,Data_Nascimento,Contacto,Email")] Funcionario funcionario)
+        public async Task<IActionResult> Edit(int id, [Bind("FuncionarioId,Nome,Endereco,CodigoPostal,Data_Nascimento,Contacto,Email,CargoId")] Funcionario funcionario)
         {
             var email = funcionario.Email;
             var contacto = funcionario.Contacto;
@@ -231,6 +234,7 @@ namespace GestaoDeTarefasIPG.Controllers
 
                 return View("Sucesso");
             }
+            ViewData["CargoId"] = new SelectList(_context.Cargo, "CargoId", "Nome");
             return View(funcionario);
         }
 
@@ -247,9 +251,11 @@ namespace GestaoDeTarefasIPG.Controllers
             }
 
             var funcionario = await _context.Funcionario
+                 .Include(c => c.Cargo)
                 .SingleOrDefaultAsync(m => m.FuncionarioId == id);
             if (funcionario == null)
             {
+              
                 return NotFound();
             }
 

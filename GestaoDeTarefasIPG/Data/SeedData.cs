@@ -14,10 +14,14 @@ namespace GestaoDeTarefasIPG.Data
         {
 
             SeedDataFuncionarios(db);
+            SeedDataCargo(db);
 
 
 
         }
+
+      
+
         public static async Task EnsurePopulatedAsync (UserManager<IdentityUser> userManager)
         {
             const string Admin_user = "issoandadificil@gmail.com";
@@ -69,9 +73,33 @@ namespace GestaoDeTarefasIPG.Data
             }
         }
 
+        private static void SeedDataCargo(GestaoDeTarefasDbContext db)
+        {
+         /*   if (db.Cargo.Any()) return;
+            Cargo Predidente = GetCargoCreatingIfNeed(db, "Presidentes");
+            Cargo Directo = GetCargoCreatingIfNeed(db, "Director ESTG");
+                  Directo = GetCargoCreatingIfNeed(db, "Director ESECD");
+                  Directo = GetCargoCreatingIfNeed(db, "Director ESS");
+                  Directo = GetCargoCreatingIfNeed(db, "Director ESTHD");
+            Cargo VicePresidente = GetCargoCreatingIfNeed(db, "Vice Presidente");
+           
+            db.Funcionario.AddRange(
+            new Cargo {Nome="Presidente}
+            );
+            db.SaveChanges();*/
+        }
+
+
+
         private static void SeedDataFuncionarios(GestaoDeTarefasDbContext db)
         {   
             if (db.Funcionario.Any()) return;
+
+            Cargo ChefeFuncionario = GetCargoCreatingIfNeed(db, "Chefe dos Funcionarios");
+            Cargo Empregado = GetCargoCreatingIfNeed(db, "Empregado de Limpesa");
+                  Empregado = GetCargoCreatingIfNeed(db, "Empregado de Limpesa");
+
+            Cargo Seguranca = GetCargoCreatingIfNeed(db, "Segurança");
 
             db.Funcionario.AddRange(
             new Funcionario
@@ -83,7 +111,7 @@ namespace GestaoDeTarefasIPG.Data
                    Data_Nascimento = new DateTime(1990, 4, 19),
                     Contacto = "912377773",
                     Email = "FF_R45@gmail.com",
-
+                    CargoId= Seguranca.CargoId
 
 
                 },
@@ -96,6 +124,7 @@ namespace GestaoDeTarefasIPG.Data
                      Data_Nascimento = new DateTime(1980, 4, 19),
                      Contacto = "916378987",
                      Email = "tmota131@gmail.com",
+                     CargoId = Seguranca.CargoId
 
 
 
@@ -109,7 +138,7 @@ namespace GestaoDeTarefasIPG.Data
                       Data_Nascimento = new DateTime(1989, 12, 19),
                       Contacto = "915678563",
                       Email = "sergcArd34@hotmail.com",
-
+                      CargoId =Seguranca.CargoId
 
 
                   },
@@ -122,7 +151,7 @@ namespace GestaoDeTarefasIPG.Data
                        Data_Nascimento = new DateTime(1979, 2, 23),
                        Contacto = "967378563",
                        Email = "rd5462@gmail.com",
-
+                       CargoId = ChefeFuncionario.CargoId
 
 
                    },
@@ -135,7 +164,7 @@ namespace GestaoDeTarefasIPG.Data
                         Data_Nascimento = new DateTime(1975, 1, 29),
                         Contacto = "937378563",
                         Email = "rtrdj9@sapo.pt",
-
+                        CargoId = Empregado.CargoId
 
 
                     },
@@ -148,7 +177,7 @@ namespace GestaoDeTarefasIPG.Data
                      Data_Nascimento = new DateTime(1983, 3, 12),
                      Contacto = "912378563",
                      Email = "barbara_R@sapo.pt",
-
+                     CargoId = Empregado.CargoId
 
 
                  },
@@ -161,7 +190,7 @@ namespace GestaoDeTarefasIPG.Data
                         Data_Nascimento = new DateTime(1969, 07, 18),
                         Contacto = "918878563",
                         Email = "gust_C@sapo.pt",
-
+                        CargoId = Seguranca.CargoId
 
 
                     },
@@ -174,7 +203,7 @@ namespace GestaoDeTarefasIPG.Data
                            Data_Nascimento = new DateTime(1980, 8, 19),
                            Contacto = "91098563",
                            Email = "joaocarneiro@gmail.com",
-
+                           CargoId = Seguranca.CargoId
 
 
                        },
@@ -187,6 +216,7 @@ namespace GestaoDeTarefasIPG.Data
                            Data_Nascimento = new DateTime(1992, 10, 30),
                            Contacto = "967878563",
                            Email = "hhdfca_R@gmail.com",
+                           CargoId = Empregado.CargoId
 
 
 
@@ -194,6 +224,20 @@ namespace GestaoDeTarefasIPG.Data
                 );
 
            db.SaveChanges();
+        }
+
+        private static Cargo GetCargoCreatingIfNeed(GestaoDeTarefasDbContext db, string nome)
+        {
+           Cargo cargo= db.Cargo.SingleOrDefault(e => e.Nome == nome);
+
+            if(cargo == null)
+            {
+              cargo = new Cargo { Nome = nome };
+                db.Add(cargo);
+                db.SaveChanges();
+            }
+
+            return cargo;
         }
     }
 }

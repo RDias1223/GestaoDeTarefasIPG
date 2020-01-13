@@ -30,15 +30,17 @@
             <th>
                 @Html.DisplayNameFor(model => model.Funcionarios.First().Nome)
             </th>
-            
-          
-           
+
+
             <th>
                 @Html.DisplayNameFor(model => model.Funcionarios.First().Contacto)
             </th>
 
             <th>
                 @Html.DisplayNameFor(model => model.Funcionarios.First().Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Funcionarios.First().Cargo)
             </th>
 
         </tr>
@@ -58,6 +60,9 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cargo.Nome)
                 </td>
                 <td>
                     <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.FuncionarioId">Editar</a>
