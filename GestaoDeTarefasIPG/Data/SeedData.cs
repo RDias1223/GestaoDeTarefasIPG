@@ -14,8 +14,8 @@ namespace GestaoDeTarefasIPG.Data
         {
 
             //SeedDataFuncionarios(db);
-            //SeedDataServicoes(db);
-            //SeedDataUnidadeOrganizacional(db);
+            SeedDataServicoes(db);
+            SeedDataUnidadeOrganizacional(db);
 
 
 
@@ -148,7 +148,7 @@ namespace GestaoDeTarefasIPG.Data
 
            // db.SaveChanges();
         }*/
-        /*
+        
         public static void SeedDataServicoes(GestaoDeTarefasDbContext db)
         {
             if (db.Servico.Any()) return;
@@ -182,9 +182,9 @@ namespace GestaoDeTarefasIPG.Data
 
                ); 
             db.SaveChanges();
-        }*/
+        }
 
-        /*
+        
         public static void SeedDataUnidadeOrganizacional (GestaoDeTarefasDbContext db)
         {
             if(db.UnidadeOrganizacional.Any()) return;
@@ -203,9 +203,9 @@ namespace GestaoDeTarefasIPG.Data
                 Email = "TestSada@gmail.com",
             });
             db.SaveChanges();
-        }*/
+        }
 
-        /*
+        
         private static UnidadeOrganizacional GetUnidadeCreatingIfNeed(GestaoDeTarefasDbContext db, int id)
         {
             UnidadeOrganizacional test = db.UnidadeOrganizacional.SingleOrDefault(t => t.UnidadeOrganizacionalID == id);
@@ -217,6 +217,6 @@ namespace GestaoDeTarefasIPG.Data
                 db.SaveChanges();
             }
             return test;
-        }*/
+        }
     }
 }
