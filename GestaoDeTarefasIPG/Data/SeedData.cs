@@ -18,10 +18,28 @@ namespace GestaoDeTarefasIPG.Data
 
 
         }
-        public static async Task EnsurePopulatedAsync (UserManager<ApplicationUser> userManag, RoleManager<IdentityRole> roleManage)
+        public static async Task EnsurePopulatedAsync (UserManager<IdentityUser> userManag, RoleManager<IdentityRole> roleManager)
         {
             const string Admin_user = "issoandadificil@gmail.com";
             const string Admin_Password = "sorestatentar";
+
+            const string Funcionario_user = "estaafazersentido@gmail.com";
+            const string Funcionario_Password = "cotinuaatentar";
+
+            if (!await roleManager.RoleExistsAsync("Administrador"))
+            {
+                await roleManager.CreateAsync(new IdentityRole("Administrador"));
+            }
+            if (!await roleManager.RoleExistsAsync("Funcionario"))
+            {
+                await roleManager.CreateAsync(new IdentityRole("Funcionario"));
+            }
+
+
+
+
+
+
 
         }
 
