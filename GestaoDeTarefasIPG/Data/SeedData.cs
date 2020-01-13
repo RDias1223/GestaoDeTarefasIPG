@@ -18,23 +18,14 @@ namespace GestaoDeTarefasIPG.Data
 
 
         }
-        public static async Task EnsurePopulatedAsync (UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
+        public static async Task EnsurePopulatedAsync (UserManager<IdentityUser> userManager)
         {
             const string Admin_user = "issoandadificil@gmail.com";
             const string Admin_Password = "sorestatentar";
 
             const string Funcionario_user = "estaafazersentido@gmail.com";
             const string Funcionario_Password = "cotinuaatentar";
-
-            if (!await roleManager.RoleExistsAsync("Administrador"))
-            {
-                await roleManager.CreateAsync(new IdentityRole("Administrador"));
-            }
-            if (!await roleManager.RoleExistsAsync("Funcionario"))
-            {
-                await roleManager.CreateAsync(new IdentityRole("Funcionario"));
-            }
-
+            
             // ADMINISTRADOR
             IdentityUser Admin = await userManager.FindByNameAsync(Admin_user);
 
@@ -64,9 +55,18 @@ namespace GestaoDeTarefasIPG.Data
             {
                 await userManager.AddToRoleAsync(funcionar, "Administrador");
             }
-
-
-
+            
+        }
+        public static async Task CreateRolesAsync(RoleManager<IdentityRole> roleManager)
+        {
+            if (!await roleManager.RoleExistsAsync("Administrador"))
+            {
+                await roleManager.CreateAsync(new IdentityRole("Administrador"));
+            }
+            if (!await roleManager.RoleExistsAsync("Funcionario"))
+            {
+                await roleManager.CreateAsync(new IdentityRole("Funcionario"));
+            }
         }
 
         private static void SeedDataFuncionarios(GestaoDeTarefasDbContext db)

@@ -8,10 +8,12 @@ using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc;
 using GestaoDeTarefasIPG.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Http;
 
 namespace GestaoDeTarefasIPG
 {
@@ -27,11 +29,22 @@ namespace GestaoDeTarefasIPG
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
+
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddIdentity<IdentityUser,IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders()
+                 .AddDefaultUI();
+
             services.AddControllersWithViews();
             services.AddRazorPages();
 
@@ -40,20 +53,21 @@ namespace GestaoDeTarefasIPG
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app,IWebHostEnvironment env,UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             if (env.IsDevelopment())
             {
+                SeedData.CreateRolesAsync(roleManager).Wait();
                 using (var serviceScope = app.ApplicationServices.CreateScope())
                 {
                     var db = serviceScope.ServiceProvider.GetService<GestaoDeTarefasDbContext>();
 
                     SeedData.Populate(db);
+                    SeedData.EnsurePopulatedAsync(userManager).Wait();
+
                 }
 
-            }
-                if (env.IsDevelopment())
-            {
+           
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
             }
@@ -79,12 +93,7 @@ namespace GestaoDeTarefasIPG
                 endpoints.MapRazorPages();
             });
 
-            using (var serviceScope = app.ApplicationServices.CreateScope())
-            {
-                var db = serviceScope.ServiceProvider.GetService<GestaoDeTarefasDbContext>();
-
-                SeedData.Populate(db);
-            }
+         
         }
     }
 }
