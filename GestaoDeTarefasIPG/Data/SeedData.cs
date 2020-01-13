@@ -192,16 +192,28 @@ namespace GestaoDeTarefasIPG.Data
             db.UnidadeOrganizacional.AddRange(
             new UnidadeOrganizacional
             {
-                Nome = "Test Bernardo",
-                Contacto = "964297400",
-                Email = "Test@gmail.com",
+                Nome = "Escola Superior de Tecnologia e Gestão",
+                Contacto = "270230510",
+                Email = "EscolaTecnologia@ipg.pt",
             },
             new UnidadeOrganizacional
             {
-                Nome = "Test Sada",
-                Contacto = "964297500",
-                Email = "TestSada@gmail.com",
-            });
+                Nome = "Escola Superior de Saúde",
+                Contacto = "270230605",
+                Email = "EscolaSaude@ipg.pt",
+            },
+             new UnidadeOrganizacional
+             {
+                 Nome = "Escola Superior de Turismo e Hotelaria",
+                 Contacto = "270230705",
+                 Email = "EscolaTurismo@ipg.pt",
+             },
+             new UnidadeOrganizacional
+             {
+                 Nome = "Escola Superior de Educação",
+                 Contacto = "270230807",
+                 Email = "EscolaEducação@ipg.pt",
+             });
             db.SaveChanges();
         }
 
