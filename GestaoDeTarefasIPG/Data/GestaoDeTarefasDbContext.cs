@@ -11,8 +11,22 @@ using GestaoDeTarefasIPG.Models;
             : base(options)
         {
         }
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
 
-        public DbSet<GestaoDeTarefasIPG.Models.Funcionario> Funcionario { get; set; }
+      
+
+
+
+
+        base.OnModelCreating(modelBuilder);
+    }
+
+
+
+    public DbSet<GestaoDeTarefasIPG.Models.Funcionario> Funcionario { get; set; }
 
         public DbSet<GestaoDeTarefasIPG.Models.UnidadeOrganizacional> UnidadeOrganizacional { get; set; }
+
+        public DbSet<GestaoDeTarefasIPG.Models.Cargo> Cargo { get; set; }
     }

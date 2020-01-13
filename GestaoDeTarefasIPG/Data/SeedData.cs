@@ -18,7 +18,12 @@ namespace GestaoDeTarefasIPG.Data
 
 
         }
+        public static async Task EnsurePopulatedAsync (UserManager<ApplicationUser> userManag, RoleManager<IdentityRole> roleManage)
+        {
+            const string Admin_user = "issoandadificil@gmail.com";
+            const string Admin_Password = "sorestatentar";
 
+        }
 
         private static void SeedDataFuncionarios(GestaoDeTarefasDbContext db)
         {   
