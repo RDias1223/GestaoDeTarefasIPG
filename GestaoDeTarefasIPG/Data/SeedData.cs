@@ -35,20 +35,35 @@ namespace GestaoDeTarefasIPG.Data
                 await roleManager.CreateAsync(new IdentityRole("Funcionario"));
             }
 
+            // ADMINISTRADOR
+            IdentityUser Admin = await userManager.FindByNameAsync(Admin_user);
 
-            IdentityUser admin = await userManager.FindByNameAsync(Admin_user);
-
-            if (admin == null)
+            if (Admin == null)
             {
-                admin = new IdentityUser { UserName = Admin_user };
-                await userManager.CreateAsync(admin, Admin_Password);
+                Admin = new IdentityUser { UserName = Admin_user };
+                await userManager.CreateAsync(Admin, Admin_Password);
             }
 
-            if (!await userManager.IsInRoleAsync(admin, "Administrador"))
+            if (!await userManager.IsInRoleAsync(Admin, "Administrador"))
             {
-                await userManager.AddToRoleAsync(admin, "Administrador");
+                await userManager.AddToRoleAsync(Admin, "Administrador");
             }
 
+
+            //funcionario
+            IdentityUser funcionar = await userManager.FindByNameAsync(Funcionario_user);
+
+            if (funcionar == null)
+            {
+                funcionar = new IdentityUser { 
+                    UserName = Funcionario_user };
+                await userManager.CreateAsync(funcionar, Funcionario_Password);
+            }
+
+            if (!await userManager.IsInRoleAsync(funcionar, "Administrador"))
+            {
+                await userManager.AddToRoleAsync(funcionar, "Administrador");
+            }
 
 
 
