@@ -21,9 +21,11 @@ namespace GestaoDeTarefasIPG.Migrations
             modelBuilder.Entity("GestaoDeTarefasIPG.Models.Cargo", b =>
                 {
                     b.Property<int>("CargoId")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CargoChefeId")
+                    b.Property<int?>("CargoChefeId")
                         .HasColumnType("int");
 
                     b.Property<string>("Nome")
@@ -32,6 +34,8 @@ namespace GestaoDeTarefasIPG.Migrations
                         .HasMaxLength(50);
 
                     b.HasKey("CargoId");
+
+                    b.HasIndex("CargoChefeId");
 
                     b.ToTable("Cargo");
                 });
@@ -101,9 +105,7 @@ namespace GestaoDeTarefasIPG.Migrations
                 {
                     b.HasOne("GestaoDeTarefasIPG.Models.Cargo", "CargoChefe")
                         .WithMany()
-                        .HasForeignKey("CargoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CargoChefeId");
                 });
 #pragma warning restore 612, 618
         }

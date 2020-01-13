@@ -18,14 +18,14 @@ namespace GestaoDeTarefasIPG.Controllers
             _context = context;
         }
 
-        // GET: Cargos
+        // GET: Cargoes
         public async Task<IActionResult> Index()
         {
             var gestaoDeTarefasDbContext = _context.Cargo.Include(c => c.CargoChefe);
             return View(await gestaoDeTarefasDbContext.ToListAsync());
         }
 
-        // GET: Cargos/Details/5
+        // GET: Cargoes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -44,14 +44,14 @@ namespace GestaoDeTarefasIPG.Controllers
             return View(cargo);
         }
 
-        // GET: Cargos/Create
+        // GET: Cargoes/Create
         public IActionResult Create()
         {
-            ViewData["CargoId"] = new SelectList(_context.Cargo, "CargoId", "Nome");
+            ViewData["CargoChefeId"] = new SelectList(_context.Cargo, "CargoId", "Nome");
             return View();
         }
 
-        // POST: Cargos/Create
+        // POST: Cargoes/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -64,11 +64,11 @@ namespace GestaoDeTarefasIPG.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CargoId"] = new SelectList(_context.Cargo, "CargoId", "Nome", cargo.CargoId);
+            ViewData["CargoChefeId"] = new SelectList(_context.Cargo, "CargoId", "Nome", cargo.CargoChefeId);
             return View(cargo);
         }
 
-        // GET: Cargos/Edit/5
+        // GET: Cargoes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -81,11 +81,11 @@ namespace GestaoDeTarefasIPG.Controllers
             {
                 return NotFound();
             }
-            ViewData["CargoId"] = new SelectList(_context.Cargo, "CargoId", "Nome", cargo.CargoId);
+            ViewData["CargoChefeId"] = new SelectList(_context.Cargo, "CargoId", "Nome", cargo.CargoChefeId);
             return View(cargo);
         }
 
-        // POST: Cargos/Edit/5
+        // POST: Cargoes/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -117,11 +117,11 @@ namespace GestaoDeTarefasIPG.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CargoId"] = new SelectList(_context.Cargo, "CargoId", "Nome", cargo.CargoId);
+            ViewData["CargoChefeId"] = new SelectList(_context.Cargo, "CargoId", "Nome", cargo.CargoChefeId);
             return View(cargo);
         }
 
-        // GET: Cargos/Delete/5
+        // GET: Cargoes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -140,7 +140,7 @@ namespace GestaoDeTarefasIPG.Controllers
             return View(cargo);
         }
 
-        // POST: Cargos/Delete/5
+        // POST: Cargoes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
