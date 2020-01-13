@@ -47,7 +47,7 @@ namespace GestaoDeTarefasIPG.Controllers
         // GET: Servicoes/Create
         public IActionResult Create()
         {
-            ViewData["UnidadeOrganizacionalID"] = new SelectList(_context.UnidadeOrganizacional, "UnidadeOrganizacionalID", "Nome");
+            ViewData["Unidade Organizacional"] = new SelectList(_context.UnidadeOrganizacional, "UnidadeOrganizacionalID", "Nome");
             return View();
         }
 
