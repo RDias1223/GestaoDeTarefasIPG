@@ -11,23 +11,50 @@
     <h4>Cargo</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Nome)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Nome)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.CargoChefe)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.CargoChefe.Nome)
-        </dd class>
+        </dd>
     </dl>
-    
+
+
     <form asp-action="Delete">
         <input type="hidden" asp-for="CargoId" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
+        <a href="#Confirmacao" data-toggle="modal" class="btn btn-danger">
+            <span class="glyphicon glyphicon-trash"></span> Eliminar
+        </a>
+        <a asp-action="Index">Voltar à Lista</a>
     </form>
+
+    <div id="Confirmacao" class="modal fade">
+        <div class="modal-dialog modal-confirm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="icon-box">
+                        <i class="material-icons">&#xE5CD;</i>
+                    </div>
+                    <h4 class="modal-title">Vai eliminar permanentemente o Funcionario <b>@Html.DisplayFor(model => model.Nome)</b>.</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p>Tem a certeza que deseja apagar? </p>
+                </div>
+                <div class="modal-footer">
+                    <form asp-action="Delete">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                        <input type="hidden" asp-for="CargoId" />
+                        <input type="submit" class="btn btn-danger" value="Eliminar" />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

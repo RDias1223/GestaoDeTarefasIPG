@@ -75,7 +75,7 @@ namespace GestaoDeTarefasIPG.Data
 
         private static void SeedDataCargo(GestaoDeTarefasDbContext db)
         {
-            //if (db.Cargo.Any()) return;
+          if (db.Cargo.Any()) return;
           
            
             db.Cargo.AddRange(
