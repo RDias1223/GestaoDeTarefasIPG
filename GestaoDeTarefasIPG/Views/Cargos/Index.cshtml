@@ -1,4 +1,5 @@
-﻿@model IEnumerable<GestaoDeTarefasIPG.Models.Cargo>
+﻿@*@@model IEnumerable<GestaoDeTarefasIPG.Models.Cargo>*@
+@model CargoViewModels
 
 @{
     ViewData["Title"] = "Index";
@@ -6,36 +7,53 @@
 
 <h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<form asp-action="Index">
+    <div class="clearfix">
+
+        <menu>
+            <button type="submit" class="btn btn-dark  float-right">
+                <img src="~/imagem/icon.png" width="20" height="20">
+            </button>
+            <input style="width:250px;" placeholder="Pesquisar" aria-label="Search" class="font-italic float-right" asp-for="Nome" />
+
+            <h4 class=" float-right">Nome do Cargo:</h4>
+        </menu>
+
+    </div>
+    <p>
+        <a class="btn btn-primary" asp-action="Create">Criar Novo</a>
+    </p>
+</form>
 <table class="table table-dark table-striped">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Nome)
+                @Html.DisplayNameFor(model => model.Cargo.First().Nome)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CargoChefe)
+                @Html.DisplayNameFor(model => model.Cargo.First().CargoChefe)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nome)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CargoChefe.Nome)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.CargoId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.CargoId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.CargoId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.Cargo)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CargoChefe.Nome)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.CargoId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.CargoId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.CargoId">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+<div modelo-pagina="@Model.Paginacao"></div>
+

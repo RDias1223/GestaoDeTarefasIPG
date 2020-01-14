@@ -11,6 +11,8 @@ namespace GestaoDeTarefasIPG.Controllers
 {
     public class CargosController : Controller
     {
+        private const int Tamanho_Pagina = 5;
+
         private readonly GestaoDeTarefasDbContext _context;
 
         public CargosController(GestaoDeTarefasDbContext context)
@@ -19,10 +21,73 @@ namespace GestaoDeTarefasIPG.Controllers
         }
 
         // GET: Cargoes
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index( CargoViewModels modelo = null, int pagina = 1, string nome = null)
         {
-            var gestaoDeTarefasDbContext = _context.Cargo.Include(c => c.CargoChefe);
-            return View(await gestaoDeTarefasDbContext.ToListAsync());
+            if (modelo != null || modelo.Nome != null)
+            {
+                nome = modelo.Nome;
+            }
+
+            IQueryable<Cargo> cargo;
+            int numCargo;
+            IEnumerable<Cargo> listaCargo;
+            if (!string.IsNullOrEmpty(nome))
+            {
+                cargo=  _context.Cargo.Include(c => c.CargoChefe)
+                    .Where(p => p.Nome.Contains(nome.Trim()));
+
+                numCargo = await cargo.CountAsync();
+                listaCargo = await cargo
+
+                .OrderBy(p => p.Nome)
+                .Skip(Tamanho_Pagina * (pagina - 1))
+                .Take(Tamanho_Pagina)
+                .ToListAsync();
+        }
+          else
+            {
+
+                cargo = _context.Cargo.Include(c => c.CargoChefe);
+
+                numCargo = await cargo.CountAsync();
+
+        listaCargo= await cargo
+            .OrderBy(p => p.Nome)
+                    .Skip(Tamanho_Pagina* (pagina - 1))
+                    .Take(Tamanho_Pagina)
+                    .ToListAsync();
+
+    }
+            if (pagina > (numCargo / Tamanho_Pagina) + 1)
+            {
+                pagina = 1;
+            }
+
+
+            if (listaCargo.Count() == 0)
+            {
+                TempData["NoItemsFound"] = "Não foram encontrados resultados para a sua pesquisa";
+            }
+
+            return View(new CargoViewModels
+            {
+                Cargo = listaCargo,
+
+                Paginacao = new PaginaViewModels
+                {
+                    PaginaCorrente = pagina,
+                    TamanhoPagina = Tamanho_Pagina,
+                    TotalItens = numCargo,
+
+                    Nome = nome
+                },
+
+            }
+            );
+        
+
+       /* var gestaoDeTarefasDbContext = _context.Cargo.Include(c => c.CargoChefe);
+            return View(await gestaoDeTarefasDbContext.ToListAsync());*/
         }
 
         // GET: Cargoes/Details/5
