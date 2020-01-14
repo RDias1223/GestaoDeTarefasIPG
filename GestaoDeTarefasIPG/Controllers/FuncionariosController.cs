@@ -153,7 +153,7 @@ namespace GestaoDeTarefasIPG.Controllers
                     await _context.SaveChangesAsync();
 
                     ViewBag.Title = " Adicionado!";
-                    ViewBag.Message = "Novo funcionario criado Sucesso.";
+                    ViewBag.Message = "Novo Cargo criado Sucesso.";
 
                     return View("Sucesso");
                 }
@@ -232,7 +232,7 @@ namespace GestaoDeTarefasIPG.Controllers
                     }
                 }
                 ViewBag.Title = "Editado!";
-                ViewBag.Message = "O funcionario foi editado com Sucesso.";
+                ViewBag.Message = "O Cargo foi editado com Sucesso.";
 
                 return View("Sucesso");
             }
@@ -290,7 +290,7 @@ namespace GestaoDeTarefasIPG.Controllers
             }
 
             ViewBag.Title = " Deletado!";
-            ViewBag.Message = "Funcionario Deletado com  Sucesso.";
+            ViewBag.Message = "Cargo Deletado com  Sucesso.";
 
             return View("Sucesso");
         }

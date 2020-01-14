@@ -127,7 +127,10 @@ namespace GestaoDeTarefasIPG.Controllers
             {
                 _context.Add(cargo);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                ViewBag.Title = " Adicionado!";
+                ViewBag.Message = "Novo funcionario criado Sucesso.";
+
+                return View("Sucesso");
             }
             ViewData["CargoChefeId"] = new SelectList(_context.Cargo, "CargoId", "Nome", cargo.CargoChefeId);
             return View(cargo);
@@ -180,7 +183,10 @@ namespace GestaoDeTarefasIPG.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                ViewBag.Title = "Editado!";
+                ViewBag.Message = "O funcionario foi editado com Sucesso.";
+
+                return View("Sucesso");
             }
             ViewData["CargoChefeId"] = new SelectList(_context.Cargo, "CargoId", "Nome", cargo.CargoChefeId);
             return View(cargo);
@@ -213,7 +219,11 @@ namespace GestaoDeTarefasIPG.Controllers
             var cargo = await _context.Cargo.FindAsync(id);
             _context.Cargo.Remove(cargo);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+
+            ViewBag.Title = " Deletado!";
+            ViewBag.Message = "Funcionario Deletado com  Sucesso.";
+
+            return View("Sucesso");
         }
 
         private bool CargoExists(int id)
