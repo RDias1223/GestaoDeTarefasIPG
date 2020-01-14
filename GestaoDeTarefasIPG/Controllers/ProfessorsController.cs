@@ -11,6 +11,10 @@ namespace GestaoDeTarefasIPG.Controllers
 {
     public class ProfessorsController : Controller
     {
+
+        private const int Tamanho_Pagina = 5;
+
+
         private readonly GestaoDeTarefasDbContext _context;
 
         public ProfessorsController(GestaoDeTarefasDbContext context)
@@ -19,7 +23,7 @@ namespace GestaoDeTarefasIPG.Controllers
         }
 
         // GET: Professors
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(FuncionarioViewModels modelo = null, int pagina = 1, string nome = null, string morada = null, string contacto = null, string email = null)
         {
             return View(await _context.Professor.ToListAsync());
         }

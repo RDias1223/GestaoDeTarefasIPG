@@ -17,10 +17,10 @@ namespace GestaoDeTarefasIPG.Data
 
         private static void SeedDataFuncionarios(GestaoDeTarefasDbContext db)
         {
-          if (db.Funcionario.Any()) return;
+         // if (db.Funcionario.Any()) return;
             db.Funcionario.AddRange(
                 new Funcionario {
-
+                   
                     Nome = "Fernando Fernandes",
                     Morada = "Adão,Guarda",
                     Contacto = "912378563",
