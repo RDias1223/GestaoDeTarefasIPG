@@ -100,22 +100,24 @@ namespace GestaoDeTarefasIPG.Data
         {   
             if (db.Funcionario.Any()) return;
 
-          
+            Cargo Empregados = GetCargoCreatingIfNeed(db, "Responsavel pela limpeza");
+
+            Cargo Seguranca = GetCargoCreatingIfNeed(db, "Segurança");
 
             db.Funcionario.AddRange(
             new Funcionario
-                {
+            {
 
-                    Nome = "Fernando Fernandes",
-                    Endereco = " Resi Masculina 1 Rua Soeirov Viegas Nº6",
-                    CodigoPostal = "6300-758 GUARDA",
-                   Data_Nascimento = new DateTime(1990, 4, 19),
-                    Contacto = "912377773",
-                    Email = "FF_R45@gmail.com",
-                  
+                Nome = "Fernando Fernandes",
+                Endereco = " Resi Masculina 1 Rua Soeirov Viegas Nº6",
+                CodigoPostal = "6300-758 GUARDA",
+                Data_Nascimento = new DateTime(1990, 4, 19),
+                Contacto = "912377773",
+                Email = "FF_R45@gmail.com",
+                CargoId =Seguranca.CargoId
 
 
-                },
+            },
                  new Funcionario
                  {
 
@@ -125,7 +127,7 @@ namespace GestaoDeTarefasIPG.Data
                      Data_Nascimento = new DateTime(1980, 4, 19),
                      Contacto = "916378987",
                      Email = "tmota131@gmail.com",
-                   
+                     CargoId = Seguranca.CargoId
 
 
 
@@ -139,7 +141,7 @@ namespace GestaoDeTarefasIPG.Data
                       Data_Nascimento = new DateTime(1989, 12, 19),
                       Contacto = "915678563",
                       Email = "sergcArd34@hotmail.com",
-                     
+                      CargoId = Seguranca.CargoId
 
 
                   },
@@ -152,7 +154,7 @@ namespace GestaoDeTarefasIPG.Data
                        Data_Nascimento = new DateTime(1979, 2, 23),
                        Contacto = "967378563",
                        Email = "rd5462@gmail.com",
-                     
+                       CargoId = Empregados.CargoId
 
 
                    },
@@ -165,7 +167,7 @@ namespace GestaoDeTarefasIPG.Data
                         Data_Nascimento = new DateTime(1975, 1, 29),
                         Contacto = "937378563",
                         Email = "rtrdj9@sapo.pt",
-                        
+                        CargoId = Empregados.CargoId
 
 
                     },
@@ -178,7 +180,7 @@ namespace GestaoDeTarefasIPG.Data
                      Data_Nascimento = new DateTime(1983, 3, 12),
                      Contacto = "912378563",
                      Email = "barbara_R@sapo.pt",
-                     
+                     CargoId = Empregados.CargoId
 
 
                  },
@@ -191,7 +193,7 @@ namespace GestaoDeTarefasIPG.Data
                         Data_Nascimento = new DateTime(1969, 07, 18),
                         Contacto = "918878563",
                         Email = "gust_C@sapo.pt",
-                      
+                        CargoId = Seguranca.CargoId
 
 
                     },
@@ -204,26 +206,27 @@ namespace GestaoDeTarefasIPG.Data
                            Data_Nascimento = new DateTime(1980, 8, 19),
                            Contacto = "91098563",
                            Email = "joaocarneiro@gmail.com",
-                         
+                           CargoId = Seguranca.CargoId
+
 
                        },
                        new Funcionario
                        {
 
-                           Nome = "Bárbara Carneiro",
+                           Nome = "Bárbara Sousa",
                            Endereco = " Rua da Boa Vista Nº76",
                            CodigoPostal = "3000-105 Coimbra",
                            Data_Nascimento = new DateTime(1992, 10, 30),
                            Contacto = "967878563",
                            Email = "hhdfca_R@gmail.com",
-                          
+                           CargoId = Empregados.CargoId
 
 
 
                        }
                 );
 
-           db.SaveChanges();
+            db.SaveChanges();
         }
 
         private static Cargo GetCargoCreatingIfNeed(GestaoDeTarefasDbContext db, string nome)
