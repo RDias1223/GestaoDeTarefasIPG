@@ -20,7 +20,7 @@ namespace GestaoDeTarefasIPG.Controllers
             _context = context;
         }
 
-        // GET: Cargoes
+        // GET: Cargos
         public async Task<IActionResult> Index( CargoViewModels modelo = null, int pagina = 1, string nome = null)
         {
             if (modelo != null || modelo.Nome != null)
@@ -90,7 +90,7 @@ namespace GestaoDeTarefasIPG.Controllers
             return View(await gestaoDeTarefasDbContext.ToListAsync());*/
         }
 
-        // GET: Cargoes/Details/5
+        // GET: Cargos/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)

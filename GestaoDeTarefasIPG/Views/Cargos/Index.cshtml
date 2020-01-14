@@ -2,10 +2,10 @@
 @model CargoViewModels
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Cargos";
 }
 
-<h1>Index</h1>
+<h1> Lista dos Cargos</h1>
 
 <form asp-action="Index">
     <div class="clearfix">
@@ -47,9 +47,9 @@
                     @Html.DisplayFor(modelItem => item.CargoChefe.Nome)
                 </td>
                 <td>
-                    <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.CargoId">Edit</a> |
-                    <a class="btn btn-info" asp-action="Details" asp-route-id="@item.CargoId">Details</a> |
-                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.CargoId">Delete</a>
+                    <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.CargoId">Editar</a> |
+                    <a class="btn btn-info" asp-action="Details" asp-route-id="@item.CargoId">Detalhes</a> |
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.CargoId">Apagar</a>
                 </td>
             </tr>
         }
