@@ -1,4 +1,5 @@
-﻿@model IEnumerable<GestaoDeTarefasIPG.Models.Servico>
+﻿@*@model IEnumerable<GestaoDeTarefasIPG.Models.Servico>*@
+@model ServicoViewModel
 
 @{
     ViewData["Title"] = "Index";
@@ -14,34 +15,41 @@
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Nome)
+               
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Contacto)
+                
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.UnidadeOrganizacional)
+                @*@Html.DisplayNameFor(model => model.UnidadeOrganizacional)*@
+             
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nome)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Contacto)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UnidadeOrganizacional.Nome) @*Contacto*@
-            </td>
-            <td>
-                <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.ServicoID">Editar</a> |
-                <a class="btn btn-info" asp-action="Details" asp-route-id="@item.ServicoID">Detalhes</a> |
-                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.ServicoID">Deletar</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.Servico)
+        {
+
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Contacto)
+                </td>
+                <td>
+                    @*@Html.DisplayFor(modelItem => item.UnidadeOrganizacional.Nome)*@
+                </td>
+                <td>
+                    <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.ServicoID">Editar</a> |
+                    <a class="btn btn-info" asp-action="Details" asp-route-id="@item.ServicoID">Detalhes</a> |
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.ServicoID">Deletar</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+<div modelo-pagina="@Model.Pagination"></div>
+

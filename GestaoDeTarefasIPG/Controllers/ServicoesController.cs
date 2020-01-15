@@ -11,7 +11,7 @@ namespace GestaoDeTarefasIPG.Controllers
 {
     public class ServicoesController : Controller
     {
-        private const int PAGE_SIZE = 3;
+        private const int PAGE_SIZE = 1;
         private readonly GestaoDeTarefasDbContext _context;
 
         public ServicoesController(GestaoDeTarefasDbContext context)
