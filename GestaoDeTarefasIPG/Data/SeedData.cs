@@ -14,7 +14,7 @@ namespace GestaoDeTarefasIPG.Data
         {
 
             //SeedDataFuncionarios(db);
-            SeedDataServicoes(db);
+            //SeedDataServicoes(db);
             SeedDataUnidadeOrganizacional(db);
 
 
@@ -149,42 +149,59 @@ namespace GestaoDeTarefasIPG.Data
            // db.SaveChanges();
         }*/
         
-        public static void SeedDataServicoes(GestaoDeTarefasDbContext db)
+        /*public static void SeedDataServicoes(GestaoDeTarefasDbContext db)
         {
             if (db.Servico.Any()) return;
-            UnidadeOrganizacional test = GetUnidadeCreatingIfNeed(db, 1);
+           
+            UnidadeOrganizacional Escola1 = GetUnidadeCreatingIfNeed(db, "Escola Superior de Saúde");
+
+            UnidadeOrganizacional Escola2 = GetUnidadeCreatingIfNeed(db, "Escola Superior de Hotelaria");
+
             db.Servico.AddRange(
                 new Servico
                 {
                     Nome = "Ação Social",
                     Contacto = "272220123",    
-                    UnidadeOrganizacionalID = test.UnidadeOrganizacionalID,
+                    UnidadeOrganizacionalID = Escola1.UnidadeOrganizacionalID,
                 },
                 new Servico
                 {
                     Nome = "Serviços Academicos",
-                    Contacto = "272220134",
-                    UnidadeOrganizacionalID = test.UnidadeOrganizacionalID,
+                    Contacto = "272220002",
+                    UnidadeOrganizacionalID = Escola1.UnidadeOrganizacionalID,
                 },
                 new Servico
                 {
                     Nome = "Centro de Informática",
-                    Contacto = "272220145",
-                    UnidadeOrganizacionalID = test.UnidadeOrganizacionalID,
+                    Contacto = "272220111",
+                    UnidadeOrganizacionalID = Escola1.UnidadeOrganizacionalID,
                 },
                 new Servico
                 {
                     Nome = "Comunicação e Divulgação",
-                    Contacto = "272220320",
-                    UnidadeOrganizacionalID = test.UnidadeOrganizacionalID,
+                    Contacto = "272220666",
+                    UnidadeOrganizacionalID = Escola2.UnidadeOrganizacionalID,
 
                 }
 
                ); 
             db.SaveChanges();
-        }
+        }*/
 
-        
+        /*private static UnidadeOrganizacional GetUnidadeCreatingIfNeed(GestaoDeTarefasDbContext db, string nome)
+        {
+            UnidadeOrganizacional test = db.UnidadeOrganizacional.SingleOrDefault(e => e.Nome == nome);
+
+            if (test == null)
+            {
+                test = new UnidadeOrganizacional { Nome = nome };
+                db.Add(test);
+                db.SaveChanges();
+            }
+
+            return test;
+        }*/
+
         public static void SeedDataUnidadeOrganizacional (GestaoDeTarefasDbContext db)
         {
             if(db.UnidadeOrganizacional.Any()) return;
@@ -212,23 +229,11 @@ namespace GestaoDeTarefasIPG.Data
              {
                  Nome = "Escola Superior de Educação",
                  Contacto = "270230807",
-                 Email = "EscolaEducação@ipg.pt",
+                 Email = "EscolaEducaçao@ipg.pt",
              });
             db.SaveChanges();
         }
 
-        
-        private static UnidadeOrganizacional GetUnidadeCreatingIfNeed(GestaoDeTarefasDbContext db, int id)
-        {
-            UnidadeOrganizacional test = db.UnidadeOrganizacional.SingleOrDefault(t => t.UnidadeOrganizacionalID == id);
-            
-            if (test == null)
-            {
-                test = new UnidadeOrganizacional { UnidadeOrganizacionalID = id };
-                db.Add(test);
-                db.SaveChanges();
-            }
-            return test;
-        }
+      
     }
 }

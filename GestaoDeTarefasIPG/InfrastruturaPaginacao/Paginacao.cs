@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace GestaoDeTarefasIPG.InfrastruturaPaginacao
 {
     // You may need to install the Microsoft.AspNetCore.Razor.Runtime package into your project
-    [HtmlTargetElement("div",Attributes="modelo-pagina")]
+    [HtmlTargetElement("div", Attributes = "modelo-pagina")]
     public class Paginacao : TagHelper
     {
         private readonly int MaxLinkPorPag = 10;
@@ -51,7 +51,7 @@ namespace GestaoDeTarefasIPG.InfrastruturaPaginacao
             {
                 var ligacao = new TagBuilder("a");
 
-                ligacao.Attributes["href"] = urlHelper.Action(AccaoDaPagin, new { pagina = p }); 
+                ligacao.Attributes["href"] = urlHelper.Action(AccaoDaPagin, new { pagina = p });
 
                 ligacao.AddCssClass("btn");
 
@@ -68,7 +68,7 @@ namespace GestaoDeTarefasIPG.InfrastruturaPaginacao
                 resultaDaDiv.InnerHtml.AppendHtml(ligacao);
             }
 
-            output.Content.AppendHtml(resultaDaDiv.InnerHtml); 
-        }  
+            output.Content.AppendHtml(resultaDaDiv.InnerHtml);
+        }
     }
 }

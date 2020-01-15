@@ -47,7 +47,7 @@ namespace GestaoDeTarefasIPG.Controllers
         // GET: Servicoes/Create
         public IActionResult Create()
         {
-            ViewData["Unidade Organizacional"] = new SelectList(_context.UnidadeOrganizacional, "UnidadeOrganizacionalID", "Nome");
+            ViewData["UnidadeOrganizacionalID"] = new SelectList(_context.UnidadeOrganizacional, "UnidadeOrganizacionalID", "Nome");
             return View();
         }
 
@@ -65,15 +65,18 @@ namespace GestaoDeTarefasIPG.Controllers
                 ModelState.AddModelError("Contacto", "O contacto já existe");
             }
 
+           
+
             if (!contactotIvalid(contacto))
             {
-                ViewBag.Title = "Adicionado.";
-                ViewBag.Message = "Serviço criado com sucesso.";
+                 ViewBag.Title = "Adicionado.";
+                 ViewBag.Message = "Serviço criado com sucesso.";
 
-                _context.Add(servico);
-                await _context.SaveChangesAsync();
-                return View("Success");
+                 _context.Add(servico);
+                 await _context.SaveChangesAsync();
+                 return View("Success");
             }
+           
             return View(servico);
         }
 
@@ -90,7 +93,7 @@ namespace GestaoDeTarefasIPG.Controllers
             {
                 return NotFound();
             }
-            ViewData["UnidadeOrganizacionalID"] = new SelectList(_context.UnidadeOrganizacional, "UnidadeOrganizacionalID", "Contacto", servico.UnidadeOrganizacionalID);
+            ViewData["UnidadeOrganizacionalID"] = new SelectList(_context.UnidadeOrganizacional, "UnidadeOrganizacionalID", "Nome", servico.UnidadeOrganizacionalID);
             return View(servico);
         }
 
@@ -126,7 +129,7 @@ namespace GestaoDeTarefasIPG.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UnidadeOrganizacionalID"] = new SelectList(_context.UnidadeOrganizacional, "UnidadeOrganizacionalID", "Contacto", servico.UnidadeOrganizacionalID);
+            ViewData["UnidadeOrganizacionalID"] = new SelectList(_context.UnidadeOrganizacional, "UnidadeOrganizacionalID", "Nome", servico.UnidadeOrganizacionalID);
             return View(servico);
         }
 

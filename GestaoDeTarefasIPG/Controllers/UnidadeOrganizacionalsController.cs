@@ -11,7 +11,7 @@ namespace GestaoDeTarefasIPG.Controllers
 {
     public class UnidadeOrganizacionalsController : Controller
     {
-        private const int PAGE_SIZE = 12;
+        private const int PAGE_SIZE = 3;
         private readonly GestaoDeTarefasDbContext _context;
 
         public UnidadeOrganizacionalsController(GestaoDeTarefasDbContext context)
@@ -21,14 +21,14 @@ namespace GestaoDeTarefasIPG.Controllers
 
         // GET: UnidadeOrganizacionals
         //Pagination and Search
-        public async Task<IActionResult> Index(UnidadeOrganizacionalViewModel model = null, int page = 1)
+        public async Task<IActionResult> Index(UnidadeOrganizacionalViewModel model = null, int pagina = 1)
         {
             string nome = null;
 
             if (model != null && model.CurrentName != null)
             {
-                nome = model.CurrentName.Trim();
-                page = 1;
+                nome = model.CurrentName;
+                
             }
 
             IQueryable<UnidadeOrganizacional> unidadeOrganizacional;
@@ -37,14 +37,14 @@ namespace GestaoDeTarefasIPG.Controllers
 
             if (!string.IsNullOrEmpty(nome))
             {
-                unidadeOrganizacional = _context.UnidadeOrganizacional
-                    .Where(p => p.Nome.Contains(nome.Trim()));
+                unidadeOrganizacional = _context.UnidadeOrganizacional                 
+                .Where(p => p.Nome.Contains(nome.Trim()));
 
                 numUnidadeOrganizacional = await unidadeOrganizacional.CountAsync();
 
                 listUnidadeOrganizacional = await unidadeOrganizacional
                     .OrderBy(p => p.Nome)
-                    .Skip(PAGE_SIZE * (page - 1))
+                    .Skip(PAGE_SIZE * (pagina - 1))
                     .Take(PAGE_SIZE)
                     .ToListAsync();
             }
@@ -57,15 +57,15 @@ namespace GestaoDeTarefasIPG.Controllers
 
                 listUnidadeOrganizacional = await unidadeOrganizacional
                     .OrderBy(p => p.Nome)
-                    .Skip(PAGE_SIZE * (page - 1))
+                    .Skip(PAGE_SIZE * (pagina - 1))
                     .Take(PAGE_SIZE)
                     .ToListAsync();
 
             }
 
-            if (page > (numUnidadeOrganizacional / PAGE_SIZE) + 1)
+            if (pagina > (numUnidadeOrganizacional / PAGE_SIZE) + 1)
             {
-                page = 1;
+                pagina = 1;
             }
 
             if (listUnidadeOrganizacional.Count() == 0)
@@ -78,17 +78,13 @@ namespace GestaoDeTarefasIPG.Controllers
                 UnidadeOrganizacional = listUnidadeOrganizacional,
                 Pagination = new PaginaViewModels
                 {
-                    PaginaCorrente = page,
+                    PaginaCorrente = pagina,
                     TamanhoPagina = PAGE_SIZE,
                     TotalItens = numUnidadeOrganizacional,
-
                     Nome = nome
                 },
-
             }
-            );
-
-            
+            );     
         }
 
         // GET: UnidadeOrganizacionals/Details/5
@@ -137,16 +133,18 @@ namespace GestaoDeTarefasIPG.Controllers
                 ModelState.AddModelError("Contacto", "O contacto já existente");
             }
 
+            
 
-            if (!contactoInvalido(contacto) || !emailInvalido(email))
-            {
-                ViewBag.Title = " Adicionado.";
-                ViewBag.Message = "Unidade Organizacional criada com sucesso.";
+                if (!contactoInvalido(contacto) || !emailInvalido(email))
+                {
+                    ViewBag.Title = " Adicionado.";
+                    ViewBag.Message = "Unidade Organizacional criada com sucesso.";
 
-                _context.Add(unidadeOrganizacional);
-                await _context.SaveChangesAsync();
-                return View("Success");
-            }
+                    _context.Add(unidadeOrganizacional);
+                    await _context.SaveChangesAsync();
+                    return View("Success");
+                }
+            
             return View(unidadeOrganizacional);
         }
 

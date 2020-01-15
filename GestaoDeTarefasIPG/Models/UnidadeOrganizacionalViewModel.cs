@@ -10,6 +10,7 @@ namespace GestaoDeTarefasIPG.Models
     {
         public IEnumerable<UnidadeOrganizacional> UnidadeOrganizacional { get; set; }
         public PaginaViewModels Pagination { get; set; }
+       
         public string CurrentName { get; set; }
 
         public string Nome { get; set; }
