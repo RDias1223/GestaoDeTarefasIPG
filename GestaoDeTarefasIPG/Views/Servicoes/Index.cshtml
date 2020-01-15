@@ -28,7 +28,7 @@
                 
             </th>
             <th>
-                @*@Html.DisplayNameFor(model => model.UnidadeOrganizacional)*@
+                @Html.DisplayNameFor(model => model.UnidadeOrganizacional)
              
             </th>
             <th></th>
@@ -46,7 +46,7 @@
                     @Html.DisplayFor(modelItem => item.Contacto)
                 </td>
                 <td>
-                    @*@Html.DisplayFor(modelItem => item.UnidadeOrganizacional.Nome)*@
+                    @Html.DisplayFor(modelItem => item.UnidadeOrganizacional.Nome)
                 </td>
                 <td>
                     <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.ServicoID">Editar</a> |

@@ -11,7 +11,7 @@ namespace GestaoDeTarefasIPG.Controllers
 {
     public class ServicoesController : Controller
     {
-        private const int PAGE_SIZE = 1;
+        private const int PAGE_SIZE = 3;
         private readonly GestaoDeTarefasDbContext _context;
 
         public ServicoesController(GestaoDeTarefasDbContext context)
@@ -36,7 +36,7 @@ namespace GestaoDeTarefasIPG.Controllers
 
             if (!string.IsNullOrEmpty(nome))
             {
-                servico = _context.Servico
+                servico = _context.Servico.Include(s => s.UnidadeOrganizacional)
                 .Where(p => p.Nome.Contains(nome.Trim()));
 
                 numServico = await servico.CountAsync();
@@ -50,7 +50,7 @@ namespace GestaoDeTarefasIPG.Controllers
             else
             {
 
-                servico = _context.Servico;
+                servico = _context.Servico.Include(s => s.UnidadeOrganizacional);
 
                 numServico = await servico.CountAsync();
 
