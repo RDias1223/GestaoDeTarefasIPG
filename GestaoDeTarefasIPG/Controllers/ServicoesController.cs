@@ -11,6 +11,7 @@ namespace GestaoDeTarefasIPG.Controllers
 {
     public class ServicoesController : Controller
     {
+        private const int PAGE_SIZE = 3;
         private readonly GestaoDeTarefasDbContext _context;
 
         public ServicoesController(GestaoDeTarefasDbContext context)
@@ -19,10 +20,70 @@ namespace GestaoDeTarefasIPG.Controllers
         }
 
         // GET: Servicoes
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(ServicoViewModel model = null, int pagina = 1)
         {
-            var gestaoDeTarefasDbContext = _context.Servico.Include(s => s.UnidadeOrganizacional);
-            return View(await gestaoDeTarefasDbContext.ToListAsync());
+            string nome = null;
+
+            if (model != null && model.CurrentName != null)
+            {
+                nome = model.CurrentName;
+
+            }
+
+            IQueryable<Servico> servico;
+            int numServico;
+            IEnumerable<Servico> listServico;
+
+            if (!string.IsNullOrEmpty(nome))
+            {
+                servico = _context.Servico
+                .Where(p => p.Nome.Contains(nome.Trim()));
+
+                numServico = await servico.CountAsync();
+
+                listServico = await servico
+                    .OrderBy(p => p.Nome)
+                    .Skip(PAGE_SIZE * (pagina - 1))
+                    .Take(PAGE_SIZE)
+                    .ToListAsync();
+            }
+            else
+            {
+
+                servico = _context.Servico;
+
+                numServico = await servico.CountAsync();
+
+                listServico = await servico
+                    .OrderBy(p => p.Nome)
+                    .Skip(PAGE_SIZE * (pagina - 1))
+                    .Take(PAGE_SIZE)
+                    .ToListAsync();
+
+            }
+
+            if (pagina > (numServico / PAGE_SIZE) + 1)
+            {
+                pagina = 1;
+            }
+
+            if (listServico.Count() == 0)
+            {
+                TempData["NoItemsFound"] = "Não foram encontrados resultados para está pesquisa";
+            }
+
+            return View(new ServicoViewModel
+            {
+                Servico = listServico,
+                Pagination = new PaginaViewModels
+                {
+                    PaginaCorrente = pagina,
+                    TamanhoPagina = PAGE_SIZE,
+                    TotalItens = numServico,
+                    Nome = nome
+                },
+            }
+            );
         }
 
         // GET: Servicoes/Details/5
