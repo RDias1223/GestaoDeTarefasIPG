@@ -11,8 +11,6 @@ namespace GestaoDeTarefasIPG.Models
             
         public PaginaViewModels Paginacao { get; set; }
         public string Nome { get; set; }
-        public string Morada { get; set; }
-        public string Contacto { get; set; }
-        public string Email { get; set; }
+        
     }
 }

@@ -44,7 +44,37 @@ namespace GestaoDeTarefasIPG
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders()
                  .AddDefaultUI();
+            services.Configure<IdentityOptions>(
+               options => {
+                    // Password settings
+                    options.Password.RequireDigit = true;
+                   options.Password.RequiredLength = 8;
+                   options.Password.RequireNonAlphanumeric = true;
+                   options.Password.RequireUppercase = true;
+                   options.Password.RequireLowercase = true;
 
+                    // Lockout
+                    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                   options.Lockout.MaxFailedAccessAttempts = 5;
+                   options.Lockout.AllowedForNewUsers = true;
+
+                    // Users
+                    options.User.RequireUniqueEmail = true;
+
+                    // Sign in
+                    options.SignIn.RequireConfirmedAccount = false;
+               }
+           );
+            services.AddAuthorization(
+            options => {
+                options.AddPolicy(
+                    "PodefazerGestao ",
+                    policy => policy.RequireRole("Administrador", "Director")
+                );
+
+                    // other policies ...
+                }
+        );
             services.AddControllersWithViews();
             services.AddRazorPages();
 
@@ -53,19 +83,21 @@ namespace GestaoDeTarefasIPG
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app,IWebHostEnvironment env,UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
-        {
+        public void Configure(IApplicationBuilder app,IWebHostEnvironment env, GestaoDeTarefasDbContext db, UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
+        {  
+            
+            SeedData.CreateRolesAsync(roleManager).Wait();
+              
             if (env.IsDevelopment())
             {
-                //SeedData.CreateRolesAsync(roleManager).Wait();
-                using (var serviceScope = app.ApplicationServices.CreateScope())
-                {
-                    var db = serviceScope.ServiceProvider.GetService<GestaoDeTarefasDbContext>();
+                
+               
 
                     SeedData.Populate(db);
-                   // SeedData.EnsurePopulatedAsync(userManager).Wait();
-
-                }
+                   SeedData.PopulateUserAsync(userManager).Wait();
+                       
+              
+                      
 
            
                 app.UseDeveloperExceptionPage();
@@ -93,7 +125,17 @@ namespace GestaoDeTarefasIPG
                 endpoints.MapRazorPages();
             });
 
-         
+            SeedData.CreateRolesAsync(roleManager).Wait();
+
+            if (env.IsDevelopment())
+            {
+
+
+
+                SeedData.Populate(db);
+                SeedData.PopulateUserAsync(userManager).Wait();
+            }
+
+            }
         }
-    }
 }

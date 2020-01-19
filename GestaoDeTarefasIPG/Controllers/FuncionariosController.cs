@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GestaoDeTarefasIPG.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GestaoDeTarefasIPG.Controllers
 {
+    [Authorize(Policy = "PodefazerGestao")]
     public class FuncionariosController : Controller
 
     {
@@ -90,7 +92,7 @@ namespace GestaoDeTarefasIPG.Controllers
                }
             );
         }
-
+        [Authorize(Roles = "Administrador")]
         // GET: Funcionarios/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -109,7 +111,7 @@ namespace GestaoDeTarefasIPG.Controllers
             ViewData["CargoId"] = new SelectList(_context.Cargo, "CargoId", "Nome");
             return View(funcionario);
         }
-
+        [Authorize(Roles = "Administrador")]
         // GET: Funcionarios/Create
         public IActionResult Create()
         {
@@ -153,7 +155,7 @@ namespace GestaoDeTarefasIPG.Controllers
                     await _context.SaveChangesAsync();
 
                     ViewBag.Title = " Adicionado!";
-                    ViewBag.Message = "Novo Cargo criado Sucesso.";
+                    ViewBag.Message = "Novo funcionario criado Sucesso.";
 
                     return View("Sucesso");
                 }
@@ -232,7 +234,7 @@ namespace GestaoDeTarefasIPG.Controllers
                     }
                 }
                 ViewBag.Title = "Editado!";
-                ViewBag.Message = "O Cargo foi editado com Sucesso.";
+                ViewBag.Message = "O funcionario foi editado com Sucesso.";
 
                 return View("Sucesso");
             }
@@ -290,7 +292,7 @@ namespace GestaoDeTarefasIPG.Controllers
             }
 
             ViewBag.Title = " Deletado!";
-            ViewBag.Message = "Cargo Deletado com  Sucesso.";
+            ViewBag.Message = "Funcionario Deletado com  Sucesso.";
 
             return View("Sucesso");
         }

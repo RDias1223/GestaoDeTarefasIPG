@@ -22,44 +22,68 @@ namespace GestaoDeTarefasIPG.Data
 
       
 
-        public static async Task EnsurePopulatedAsync (UserManager<IdentityUser> userManager)
+        public static async Task PopulateUserAsync (UserManager<IdentityUser> userManager)
         {
             const string Admin_user = "issoandadificil@gmail.com";
-            const string Admin_Password = "sorestatentar";
+            const string Admin_Password = "sorestaTentar1";
 
-            const string Funcionario_user = "estaafazersentido@gmail.com";
-            const string Funcionario_Password = "cotinuaatentar";
+            const string Director_user = "estaafazersentido@gmail.com";
+            const string Director_Password = "cotinuaatentar";
             
             // ADMINISTRADOR
-            IdentityUser Admin = await userManager.FindByNameAsync(Admin_user);
+            IdentityUser user = await userManager.FindByNameAsync(Admin_user);
 
-            if (Admin == null)
+            if (user == null)
             {
-                Admin = new IdentityUser { UserName = Admin_user };
-                await userManager.CreateAsync(Admin, Admin_Password);
+                user = new IdentityUser {
+                    UserName = Admin_user,
+                    Email = Admin_user };
+
+                await userManager.CreateAsync(user, Admin_Password);
             }
 
-            if (!await userManager.IsInRoleAsync(Admin, "Administrador"))
+            if (!await userManager.IsInRoleAsync(user, "Administrador"))
             {
-                await userManager.AddToRoleAsync(Admin, "Administrador");
+                await userManager.AddToRoleAsync(user, "Administrador");
             }
 
 
-            //funcionario
-            IdentityUser funcionar = await userManager.FindByNameAsync(Funcionario_user);
+            //Director
+            user = await userManager.FindByNameAsync(Director_user);
 
-            if (funcionar == null)
+            if (user == null)
             {
-                funcionar = new IdentityUser { 
-                    UserName = Funcionario_user };
-                await userManager.CreateAsync(funcionar, Funcionario_Password);
+               user= new IdentityUser { 
+                    UserName = Director_user, Email=Director_user };
+                await userManager.CreateAsync(user, Director_Password);
             }
 
-            if (!await userManager.IsInRoleAsync(funcionar, "Administrador"))
+            if (!await userManager.IsInRoleAsync(user, "Director"))
             {
-                await userManager.AddToRoleAsync(funcionar, "Administrador");
+                await userManager.AddToRoleAsync(user, "Director");
             }
+            user = await userManager.FindByNameAsync("test@gmail.com");
             
+            if (user == null)
+            {
+                user = new IdentityUser
+                {
+                    UserName = "test@gmail.com",
+                    Email = "test@gmail.com"
+                };
+
+                await userManager.CreateAsync(user, Admin_Password);
+            }
+            if (user == null)
+            {
+                user = new IdentityUser
+                {
+                    UserName = "test@gmail.com",
+                    Email = "test@gmail.com"
+                };
+
+                await userManager.CreateAsync(user, Director_Password);
+            }
         }
         public static async Task CreateRolesAsync(RoleManager<IdentityRole> roleManager)
         {
@@ -67,11 +91,13 @@ namespace GestaoDeTarefasIPG.Data
             {
                 await roleManager.CreateAsync(new IdentityRole("Administrador"));
             }
-            if (!await roleManager.RoleExistsAsync("Funcionario"))
+            if (!await roleManager.RoleExistsAsync("Director"))
             {
-                await roleManager.CreateAsync(new IdentityRole("Funcionario"));
+                await roleManager.CreateAsync(new IdentityRole("Director"));
             }
         }
+
+
 
         private static void SeedDataCargo(GestaoDeTarefasDbContext db)
         {
