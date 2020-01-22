@@ -1,4 +1,5 @@
-﻿@model IEnumerable<GestaoDeTarefasIPG.Models.Professor>
+﻿@model ProfessorViewModels
+
 
 @{
     ViewData["Title"] = "Index";
@@ -13,43 +14,46 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Nome)
+                @Html.DisplayNameFor(model => model.Professores.First().Nome)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Contato)
+                @Html.DisplayNameFor(model => model.Professores.First().Contato)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Email)
+                @Html.DisplayNameFor(model => model.Professores.First().Email)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Morada)
+                @Html.DisplayNameFor(model => model.Professores.First().Morada)
             </th>
-            
+
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nome)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Contato)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Morada)
-            </td>
-           
-            <td>
-                <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.ProfessorId">Editar</a> |
-                <a class="btn btn-info" asp-action="Details" asp-route-id="@item.ProfessorId">Detalhes</a> |
-                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.ProfessorId">Deletar</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.Professores)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Contato)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Morada)
+                </td>
+
+                <td>
+                    <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.ProfessorId">Editar</a> |
+                    <a class="btn btn-info" asp-action="Details" asp-route-id="@item.ProfessorId">Detalhes</a> |
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.ProfessorId">Deletar</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+<div modelo-pagina="@Model.Paginacao"></div>
+

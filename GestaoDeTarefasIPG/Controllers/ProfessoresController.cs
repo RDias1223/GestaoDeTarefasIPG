@@ -10,7 +10,12 @@ using GestaoDeTarefasIPG.Models;
 namespace GestaoDeTarefasIPG.Controllers
 {
     public class ProfessoresController : Controller
+
     {
+
+        private const int Tamanho_Pagina = 5;
+
+
         private readonly GestaoDeTarefasDbContext _context;
 
         public ProfessoresController(GestaoDeTarefasDbContext context)
@@ -19,9 +24,71 @@ namespace GestaoDeTarefasIPG.Controllers
         }
 
         // GET: Professores
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(ProfessorViewModels modelo = null, int pagina = 1, string nome = null)
         {
-            return View(await _context.Professor.ToListAsync());
+            if (modelo != null || modelo.Nome != null)
+            {
+                nome = modelo.Nome;
+            }
+
+            IQueryable<Professor> professor;
+            int numprofessor;
+            IEnumerable<Professor> listaProfessor;
+
+
+            if (!string.IsNullOrEmpty(nome))
+            {
+                professor = _context.Professor
+                    .Where(p => p.Nome.Contains(nome.Trim()));
+
+                numprofessor = await professor.CountAsync();
+
+                listaProfessor = await professor
+                    .OrderBy(p => p.Nome)
+                    .Skip(Tamanho_Pagina * (pagina - 1))
+                    .Take(Tamanho_Pagina)
+                    .ToListAsync();
+            }
+            else
+            {
+
+                professor = _context.Professor;
+
+                numprofessor = await professor.CountAsync();
+
+                listaProfessor = await professor
+                    .OrderBy(p => p.Nome)
+                    .Skip(Tamanho_Pagina * (pagina - 1))
+                    .Take(Tamanho_Pagina)
+                    .ToListAsync();
+
+            }
+            if (pagina > (numprofessor / Tamanho_Pagina) + 1)
+            {
+                pagina = 1;
+            }
+
+
+            if (listaProfessor.Count() == 0)
+            {
+                TempData["NoItemsFound"] = "Não foram encontrados resultados para a sua pesquisa";
+            }
+
+
+            return View(new ProfessorViewModels
+            {
+                Professores = listaProfessor,
+                Paginacao = new PaginaViewModels
+                {
+                    PaginaCorrente = pagina,
+                    TamanhoPagina = Tamanho_Pagina,
+                    TotalItens = numprofessor,
+
+                    Nome = nome
+                },
+
+            }
+            );
         }
 
         // GET: Professores/Details/5

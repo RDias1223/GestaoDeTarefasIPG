@@ -9,7 +9,7 @@ namespace GestaoDeTarefasIPG.Models
     {
 
 
-        public IEnumerable<Funcionario> Funcionarios { get; set; }
+        public IEnumerable<Professor> Professores { get; set; }
 
         public PaginaViewModels Paginacao { get; set; }
         public string Nome { get; set; }
