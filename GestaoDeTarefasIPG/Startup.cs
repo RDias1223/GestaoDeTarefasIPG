@@ -29,14 +29,7 @@ namespace GestaoDeTarefasIPG
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<CookiePolicyOptions>(options =>
-            {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
-                options.MinimumSameSitePolicy = SameSiteMode.None;
-            });
-
-            services.AddDbContext<ApplicationDbContext>(options =>
+                services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
 
@@ -83,23 +76,18 @@ namespace GestaoDeTarefasIPG
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app,IWebHostEnvironment env, GestaoDeTarefasDbContext db, UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
+        public void Configure(
+            IApplicationBuilder app,
+            IWebHostEnvironment env,
+            GestaoDeTarefasDbContext db,
+            UserManager<IdentityUser> userManager, 
+            RoleManager<IdentityRole> roleManager)
         {  
             
-            SeedData.CreateRolesAsync(roleManager).Wait();
-              
+         
             if (env.IsDevelopment())
             {
-                
-               
-
-                    SeedData.Populate(db);
-                   SeedData.PopulateUserAsync(userManager).Wait();
-                       
-              
-                      
-
-           
+         
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
             }
@@ -129,11 +117,8 @@ namespace GestaoDeTarefasIPG
 
             if (env.IsDevelopment())
             {
-
-
-
                 SeedData.Populate(db);
-                SeedData.PopulateUserAsync(userManager).Wait();
+               SeedData.PopulateUserAsync(userManager).Wait();
             }
 
             }

@@ -10,6 +10,10 @@ namespace GestaoDeTarefasIPG.Data
 {
     public class SeedData
     {
+        private const string Roles_Presidente = "Administrador";
+        private const string Roles_Director = "Director";
+
+
         public static void Populate(GestaoDeTarefasDbContext db)
         {
 
@@ -24,13 +28,13 @@ namespace GestaoDeTarefasIPG.Data
 
         public static async Task PopulateUserAsync (UserManager<IdentityUser> userManager)
         {
-            const string Admin_user = "issoandadificil@gmail.com";
-            const string Admin_Password = "sorestaTentar1";
+            const string Admin_user = "presidente@gmail.com";
+            const string Admin_Password = "soresta_Tente1#";
 
             const string Director_user = "estaafazersentido@gmail.com";
-            const string Director_Password = "cotinuaatentar";
+            const string Director_Password = "cotinua_a_tentar2";
             
-            // ADMINISTRADOR
+            // Presidente
             IdentityUser user = await userManager.FindByNameAsync(Admin_user);
 
             if (user == null)
@@ -42,9 +46,9 @@ namespace GestaoDeTarefasIPG.Data
                 await userManager.CreateAsync(user, Admin_Password);
             }
 
-            if (!await userManager.IsInRoleAsync(user, "Administrador"))
+            if (!await userManager.IsInRoleAsync(user, Roles_Presidente))
             {
-                await userManager.AddToRoleAsync(user, "Administrador");
+                await userManager.AddToRoleAsync(user, Roles_Presidente);
             }
 
 
@@ -54,32 +58,32 @@ namespace GestaoDeTarefasIPG.Data
             if (user == null)
             {
                user= new IdentityUser { 
-                    UserName = Director_user, Email=Director_user };
+                    UserName = Director_user, 
+                   Email=Director_user };
                 await userManager.CreateAsync(user, Director_Password);
             }
 
-            if (!await userManager.IsInRoleAsync(user, "Director"))
+            if (!await userManager.IsInRoleAsync(user, Roles_Director))
             {
-                await userManager.AddToRoleAsync(user, "Director");
+                await userManager.AddToRoleAsync(user, Roles_Director);
             }
+
             user = await userManager.FindByNameAsync("test@gmail.com");
-            
-            if (user == null)
-            {
-                user = new IdentityUser
-                {
+            if (user == null){
+                user = new IdentityUser{
                     UserName = "test@gmail.com",
                     Email = "test@gmail.com"
                 };
 
                 await userManager.CreateAsync(user, Admin_Password);
             }
+
             if (user == null)
             {
                 user = new IdentityUser
                 {
-                    UserName = "test@gmail.com",
-                    Email = "test@gmail.com"
+                    UserName = "test3@gmail.com",
+                    Email = "test3@gmail.com"
                 };
 
                 await userManager.CreateAsync(user, Director_Password);
@@ -87,13 +91,12 @@ namespace GestaoDeTarefasIPG.Data
         }
         public static async Task CreateRolesAsync(RoleManager<IdentityRole> roleManager)
         {
-            if (!await roleManager.RoleExistsAsync("Administrador"))
-            {
-                await roleManager.CreateAsync(new IdentityRole("Administrador"));
+            if (!await roleManager.RoleExistsAsync(Roles_Presidente)){
+                await roleManager.CreateAsync(new IdentityRole(Roles_Presidente));
             }
-            if (!await roleManager.RoleExistsAsync("Director"))
-            {
-                await roleManager.CreateAsync(new IdentityRole("Director"));
+
+            if (!await roleManager.RoleExistsAsync(Roles_Director)){
+                await roleManager.CreateAsync(new IdentityRole(Roles_Director));
             }
         }
 
