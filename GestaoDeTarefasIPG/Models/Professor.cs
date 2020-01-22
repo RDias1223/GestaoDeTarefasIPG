@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace GestaoDeTarefasIPG.Models
 {
-    public class Professores
+    public class Professor
     {
 
-        public int ProfessoresId { get; set; }
+        public int ProfessorId { get; set; }
 
 
         [Required(ErrorMessage = "Adicionar o Nome")]
