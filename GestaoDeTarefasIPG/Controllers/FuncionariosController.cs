@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace GestaoDeTarefasIPG.Controllers
 {
-    [Authorize(Policy = "PodefazerGestao")]
+    //[Authorize(Policy = "PodefazerGestao")]
     public class FuncionariosController : Controller
 
     {

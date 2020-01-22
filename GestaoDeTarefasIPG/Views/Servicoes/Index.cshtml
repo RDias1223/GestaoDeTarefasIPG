@@ -1,40 +1,43 @@
-﻿@*@model IEnumerable<GestaoDeTarefasIPG.Models.UnidadeOrganizacional>*@
-@model UnidadeOrganizacionalViewModel
+﻿@*@model IEnumerable<GestaoDeTarefasIPG.Models.Servico>*@
+@model ServicoViewModel
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Unidade Organizacional</h1>
+<h1>Serviço</h1>
 
 <p>
-    <a asp-action="Create">Criar Novo</a>
+    <a asp-action="Create">Criar Novo Serviço</a>
 </p>
 <form asp-action="Index">
     <p style="float:right">
-        Pesquisar por Unidade Organizacional: <input style="width: 200px;" asp-for="CurrentName" />
+        Pesquisar por Serviço: <input style="width: 200px;" asp-for="CurrentName" />
         <button class="btn btn-info" type="submit" value="Pesquisar"><span class="glyphicon glyphicon-search"></span> Pesquisar</button>
     </p>
 </form>
-
 <table class="table table-dark table-striped">
     <thead>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Nome)
+
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Contacto)
+
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Email)
+                @Html.DisplayNameFor(model => model.UnidadeOrganizacional)
+
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.UnidadeOrganizacional)
+        @foreach (var item in Model.Servico)
         {
+
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.Nome)
@@ -43,12 +46,12 @@
                     @Html.DisplayFor(modelItem => item.Contacto)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Email)
+                    @Html.DisplayFor(modelItem => item.UnidadeOrganizacional.Nome)
                 </td>
                 <td>
-                    <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.UnidadeOrganizacionalID">Editar</a> |
-                    <a class="btn btn-info" asp-action="Details" asp-route-id="@item.UnidadeOrganizacionalID">Detalhes</a> |
-                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.UnidadeOrganizacionalID">Deletar</a>
+                    <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.ServicoID">Editar</a> |
+                    <a class="btn btn-info" asp-action="Details" asp-route-id="@item.ServicoID">Detalhes</a> |
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.ServicoID">Deletar</a>
                 </td>
             </tr>
         }

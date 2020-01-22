@@ -82,6 +82,31 @@ namespace GestaoDeTarefasIPG.Migrations
                     b.ToTable("Funcionario");
                 });
 
+            modelBuilder.Entity("GestaoDeTarefasIPG.Models.Servico", b =>
+                {
+                    b.Property<int>("ServicoID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Contacto")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UnidadeOrganizacionalID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ServicoID");
+
+                    b.HasIndex("UnidadeOrganizacionalID");
+
+                    b.ToTable("Servico");
+                });
+
             modelBuilder.Entity("GestaoDeTarefasIPG.Models.UnidadeOrganizacional", b =>
                 {
                     b.Property<int>("UnidadeOrganizacionalID")
@@ -118,6 +143,15 @@ namespace GestaoDeTarefasIPG.Migrations
                     b.HasOne("GestaoDeTarefasIPG.Models.Cargo", "Cargo")
                         .WithMany()
                         .HasForeignKey("CargoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("GestaoDeTarefasIPG.Models.Servico", b =>
+                {
+                    b.HasOne("GestaoDeTarefasIPG.Models.UnidadeOrganizacional", "UnidadeOrganizacional")
+                        .WithMany()
+                        .HasForeignKey("UnidadeOrganizacionalID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

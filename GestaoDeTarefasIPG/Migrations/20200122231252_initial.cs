@@ -67,6 +67,27 @@ namespace GestaoDeTarefasIPG.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Servico",
+                columns: table => new
+                {
+                    ServicoID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nome = table.Column<string>(nullable: false),
+                    Contacto = table.Column<string>(nullable: false),
+                    UnidadeOrganizacionalID = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Servico", x => x.ServicoID);
+                    table.ForeignKey(
+                        name: "FK_Servico_UnidadeOrganizacional_UnidadeOrganizacionalID",
+                        column: x => x.UnidadeOrganizacionalID,
+                        principalTable: "UnidadeOrganizacional",
+                        principalColumn: "UnidadeOrganizacionalID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Cargo_CargoChefeId",
                 table: "Cargo",
@@ -76,6 +97,11 @@ namespace GestaoDeTarefasIPG.Migrations
                 name: "IX_Funcionario_CargoId",
                 table: "Funcionario",
                 column: "CargoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Servico_UnidadeOrganizacionalID",
+                table: "Servico",
+                column: "UnidadeOrganizacionalID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -84,10 +110,13 @@ namespace GestaoDeTarefasIPG.Migrations
                 name: "Funcionario");
 
             migrationBuilder.DropTable(
-                name: "UnidadeOrganizacional");
+                name: "Servico");
 
             migrationBuilder.DropTable(
                 name: "Cargo");
+
+            migrationBuilder.DropTable(
+                name: "UnidadeOrganizacional");
         }
     }
 }
