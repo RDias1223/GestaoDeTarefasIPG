@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GestaoDeTarefasIPG.Migrations
 {
     [DbContext(typeof(GestaoDeTarefasDbContext))]
-    [Migration("20200106110616_atualizardados")]
-    partial class atualizardados
+    [Migration("20200122180104_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

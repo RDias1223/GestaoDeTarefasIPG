@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace GestaoDeTarefasIPG.Migrations
 {
-    public partial class funcionario : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,7 +14,7 @@ namespace GestaoDeTarefasIPG.Migrations
                     FuncionarioId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nome = table.Column<string>(maxLength: 50, nullable: false),
-                    Endereco = table.Column<string>(maxLength: 50, nullable: false),
+                    Endereco = table.Column<string>(maxLength: 100, nullable: false),
                     CodigoPostal = table.Column<string>(nullable: false),
                     Data_Nascimento = table.Column<DateTime>(nullable: false),
                     Contacto = table.Column<string>(nullable: false),
