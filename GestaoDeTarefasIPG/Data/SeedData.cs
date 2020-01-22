@@ -269,7 +269,7 @@ namespace GestaoDeTarefasIPG.Data
                 db.SaveChanges();
             }
 
-            return cargo;
+            return cargo;  
         }
     }
 }
