@@ -122,6 +122,26 @@ namespace GestaoDeTarefasIPG.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ProfessorId,Nome,DataNascimento,Contato,Email,Morada,CodigoPostal")] Professor professor)
         {
+
+            var email = professor.Email;
+            var contacto = professor.Contato;
+
+            if (emailInvalido(email) == true)
+            {
+                //Mensagem de erro se o email for inválido
+                ModelState.AddModelError("Email", "Este email já existe");
+            }
+
+
+            if (contatoInvalido(contacto))
+            {
+                //Mensagem de erro se o nº de CC já existe
+                ModelState.AddModelError("Contato", "Contato já existente");
+            }
+
+
+
+
             if (ModelState.IsValid)
             {
                 _context.Add(professor);
@@ -159,10 +179,32 @@ namespace GestaoDeTarefasIPG.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ProfessorId,Nome,DataNascimento,Contato,Email,Morada,CodigoPostal")] Professor professor)
         {
+
+            var email = professor.Email;
+            var contato = professor.Contato;
+            var porfId = professor.ProfessorId;
             if (id != professor.ProfessorId)
             {
                 return NotFound();
             }
+
+
+
+            if (emailInvalidoEdit(email, porfId))
+            {
+                //Mensagem de erro se o email já existir
+                ModelState.AddModelError("Email", "Email já existente");
+            }
+
+
+            //Validar Contacto
+            if (contatoInvalidoEdit(contato, porfId))
+            {
+                //Mensagem de erro se o CC já existir
+                ModelState.AddModelError("Contacto", "Contacto já existente");
+            }
+
+
 
             if (ModelState.IsValid)
             {
@@ -229,6 +271,75 @@ namespace GestaoDeTarefasIPG.Controllers
         private bool ProfessorExists(int id)
         {
             return _context.Professor.Any(e => e.ProfessorId == id);
+        }
+
+
+        /*para creat*/
+
+        /*return true se o email já existir no DB  */
+        private bool emailInvalido(string email)
+        {
+            bool invalido = false;
+
+            //Procura na BD se existem  com o mesmo email
+            var professor = from e in _context.Professor
+                            where e.Email.Contains(email)
+                            select e;
+
+            if (!professor.Count().Equals(0))
+            {
+                invalido = true;
+            }
+
+            return invalido;
+        }
+
+        private bool contatoInvalido(string contato)
+        {
+            bool invalido = false;
+
+
+            var professor = from e in _context.Professor
+                            where e.Contato.Contains(contato)
+                            select e;
+
+            if (!professor.Count().Equals(0))
+            {
+                invalido = true;
+            }
+
+            return invalido;
+        }
+        /*+++++++++++++++Edit++++++++++++++++*/
+        private bool emailInvalidoEdit(string email, int funId)
+        {
+            bool invalido = false;
+
+            var professor = from e in _context.Professor
+                            where e.Email.Contains(email) && e.ProfessorId != funId
+                            select e;
+
+            if (!professor.Count().Equals(0))
+            {
+                invalido = true;
+            }
+
+            return invalido;
+        }
+        private bool contatoInvalidoEdit(string contato, int funId)
+        {
+            bool invalido = false;
+
+            var professor = from e in _context.Professor
+                            where e.Contato.Contains(contato) && e.ProfessorId != funId
+                            select e;
+
+            if (!professor.Count().Equals(0))
+            {
+                invalido = true;
+            }
+
+            return invalido;
         }
     }
 }

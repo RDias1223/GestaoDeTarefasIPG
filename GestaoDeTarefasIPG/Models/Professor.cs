@@ -25,7 +25,7 @@ namespace GestaoDeTarefasIPG.Models
 
         [Required(ErrorMessage = "Adicionar o Contato")]
         [RegularExpression(@"(2\d{8})|(9[1236]\d{7})", ErrorMessage = "Contato Incorreto")]
-        public int Contato { get; set; }
+        public string Contato { get; set; }
 
 
         [Required(ErrorMessage = "Adicionar o Email")]
