@@ -118,7 +118,7 @@ namespace GestaoDeTarefasIPG
             if (env.IsDevelopment())
             {
                 SeedData.Populate(db);
-               SeedData.PopulateUserAsync(userManager).Wait();
+              // SeedData.PopulateUserAsync(userManager).Wait();
             }
 
             }
