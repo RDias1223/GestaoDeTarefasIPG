@@ -19,12 +19,45 @@ namespace GestaoDeTarefasIPG.Data
 
             SeedDataFuncionarios(db);
             SeedDataCargo(db);
+            SeedDataUnidadeOrganizacional(db);
 
 
 
         }
 
-      
+
+        public static void SeedDataUnidadeOrganizacional(GestaoDeTarefasDbContext db)
+        {
+            if (db.UnidadeOrganizacional.Any()) return;
+
+            db.UnidadeOrganizacional.AddRange(
+            new UnidadeOrganizacional
+            {
+                Nome = "Escola Superior de Tecnologia e Gestão",
+                Contacto = "270230510",
+                Email = "EscolaTecnologia@ipg.pt",
+            },
+            new UnidadeOrganizacional
+            {
+                Nome = "Escola Superior de Saúde",
+                Contacto = "270230605",
+                Email = "EscolaSaude@ipg.pt",
+            },
+             new UnidadeOrganizacional
+             {
+                 Nome = "Escola Superior de Turismo e Hotelaria",
+                 Contacto = "270230705",
+                 Email = "EscolaTurismo@ipg.pt",
+             },
+             new UnidadeOrganizacional
+             {
+                 Nome = "Escola Superior de Educação",
+                 Contacto = "270230807",
+                 Email = "EscolaEducaçao@ipg.pt",
+             });
+            db.SaveChanges();
+        }
+
 
         public static async Task PopulateUserAsync (UserManager<IdentityUser> userManager)
         {

@@ -113,7 +113,7 @@ namespace GestaoDeTarefasIPG
                 endpoints.MapRazorPages();
             });
 
-            SeedData.CreateRolesAsync(roleManager).Wait();
+            //SeedData.CreateRolesAsync(roleManager).Wait();
 
             if (env.IsDevelopment())
             {

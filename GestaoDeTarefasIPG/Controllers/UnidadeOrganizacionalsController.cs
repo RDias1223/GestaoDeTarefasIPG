@@ -11,7 +11,7 @@ namespace GestaoDeTarefasIPG.Controllers
 {
     public class UnidadeOrganizacionalsController : Controller
     {
-        private const int PAGE_SIZE = 12;
+        private const int PAGE_SIZE = 3;
         private readonly GestaoDeTarefasDbContext _context;
 
         public UnidadeOrganizacionalsController(GestaoDeTarefasDbContext context)
@@ -21,14 +21,14 @@ namespace GestaoDeTarefasIPG.Controllers
 
         // GET: UnidadeOrganizacionals
         //Pagination and Search
-        public async Task<IActionResult> Index(UnidadeOrganizacionalViewModel model = null, int page = 1)
+        public async Task<IActionResult> Index(UnidadeOrganizacionalViewModel model = null, int pagina = 1)
         {
             string nome = null;
 
             if (model != null && model.CurrentName != null)
             {
-                nome = model.CurrentName.Trim();
-                page = 1;
+                nome = model.CurrentName;
+
             }
 
             IQueryable<UnidadeOrganizacional> unidadeOrganizacional;
@@ -38,13 +38,13 @@ namespace GestaoDeTarefasIPG.Controllers
             if (!string.IsNullOrEmpty(nome))
             {
                 unidadeOrganizacional = _context.UnidadeOrganizacional
-                    .Where(p => p.Nome.Contains(nome.Trim()));
+                .Where(p => p.Nome.Contains(nome.Trim()));
 
                 numUnidadeOrganizacional = await unidadeOrganizacional.CountAsync();
 
                 listUnidadeOrganizacional = await unidadeOrganizacional
                     .OrderBy(p => p.Nome)
-                    .Skip(PAGE_SIZE * (page - 1))
+                    .Skip(PAGE_SIZE * (pagina - 1))
                     .Take(PAGE_SIZE)
                     .ToListAsync();
             }
@@ -57,15 +57,15 @@ namespace GestaoDeTarefasIPG.Controllers
 
                 listUnidadeOrganizacional = await unidadeOrganizacional
                     .OrderBy(p => p.Nome)
-                    .Skip(PAGE_SIZE * (page - 1))
+                    .Skip(PAGE_SIZE * (pagina - 1))
                     .Take(PAGE_SIZE)
                     .ToListAsync();
 
             }
 
-            if (page > (numUnidadeOrganizacional / PAGE_SIZE) + 1)
+            if (pagina > (numUnidadeOrganizacional / PAGE_SIZE) + 1)
             {
-                page = 1;
+                pagina = 1;
             }
 
             if (listUnidadeOrganizacional.Count() == 0)
@@ -78,17 +78,13 @@ namespace GestaoDeTarefasIPG.Controllers
                 UnidadeOrganizacional = listUnidadeOrganizacional,
                 Pagination = new PaginaViewModels
                 {
-                    PaginaCorrente = page,
+                    PaginaCorrente = pagina,
                     TamanhoPagina = PAGE_SIZE,
                     TotalItens = numUnidadeOrganizacional,
-
                     Nome = nome
                 },
-
             }
             );
-
-            
         }
 
         // GET: UnidadeOrganizacionals/Details/5
@@ -127,7 +123,7 @@ namespace GestaoDeTarefasIPG.Controllers
 
             if (emailInvalido(email) == true)
             {
-        
+
                 ModelState.AddModelError("Email", "O email já existe");
             }
 
@@ -136,6 +132,7 @@ namespace GestaoDeTarefasIPG.Controllers
             {
                 ModelState.AddModelError("Contacto", "O contacto já existente");
             }
+
 
 
             if (!contactoInvalido(contacto) || !emailInvalido(email))
@@ -147,6 +144,7 @@ namespace GestaoDeTarefasIPG.Controllers
                 await _context.SaveChangesAsync();
                 return View("Success");
             }
+
             return View(unidadeOrganizacional);
         }
 
@@ -177,15 +175,15 @@ namespace GestaoDeTarefasIPG.Controllers
             var contacto = unidadeOrganizacional.Contacto;
             var uniId = unidadeOrganizacional.UnidadeOrganizacionalID;
 
-            if(emailInvalidoEdit(email, uniId))
+            if (emailInvalidoEdit(email, uniId))
             {
-               
+
                 ModelState.AddModelError("Email", "O email já existe");
             }
 
             if (contactoInvalidoEdit(contacto, uniId))
             {
-              
+
                 ModelState.AddModelError("Contacto", "O contacto já existente");
             }
 
@@ -263,8 +261,8 @@ namespace GestaoDeTarefasIPG.Controllers
 
 
             var unidade = from e in _context.UnidadeOrganizacional
-                              where e.Contacto.Contains(contacto)
-                              select e;
+                          where e.Contacto.Contains(contacto)
+                          select e;
 
             if (!unidade.Count().Equals(0))
             {
@@ -282,8 +280,8 @@ namespace GestaoDeTarefasIPG.Controllers
 
             //Procura na BD se existem  com o mesmo email
             var unidade = from e in _context.UnidadeOrganizacional
-                              where e.Email.Contains(email)
-                              select e;
+                          where e.Email.Contains(email)
+                          select e;
 
             if (!unidade.Count().Equals(0))
             {
@@ -299,8 +297,8 @@ namespace GestaoDeTarefasIPG.Controllers
             bool invalido = false;
 
             var unidade = from e in _context.UnidadeOrganizacional
-                              where e.Email.Contains(email) && e.UnidadeOrganizacionalID != uniId
-                              select e;
+                          where e.Email.Contains(email) && e.UnidadeOrganizacionalID != uniId
+                          select e;
 
             if (!unidade.Count().Equals(0))
             {
@@ -314,8 +312,8 @@ namespace GestaoDeTarefasIPG.Controllers
             bool invalido = false;
 
             var unidade = from e in _context.UnidadeOrganizacional
-                              where e.Contacto.Contains(contacto) && e.UnidadeOrganizacionalID != uniId
-                              select e;
+                          where e.Contacto.Contains(contacto) && e.UnidadeOrganizacionalID != uniId
+                          select e;
 
             if (!unidade.Count().Equals(0))
             {
@@ -326,5 +324,5 @@ namespace GestaoDeTarefasIPG.Controllers
         }
     }
 }
-    
+
 
