@@ -59,7 +59,12 @@ namespace GestaoDeTarefasIPG.Controllers
             {
                 _context.Add(professor);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+
+                ViewBag.Title = "Adicionado";
+                ViewBag.Message = "Professor criado com Sucesso!";
+
+                return View("Sucesso");
+
             }
             return View(professor);
         }
