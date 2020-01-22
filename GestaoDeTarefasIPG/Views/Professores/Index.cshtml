@@ -16,9 +16,6 @@
                 @Html.DisplayNameFor(model => model.Nome)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DataNascimento)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Contato)
             </th>
             <th>
@@ -27,9 +24,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Morada)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CodigoPostal)
-            </th>
+            
             <th></th>
         </tr>
     </thead>
@@ -40,9 +35,6 @@
                 @Html.DisplayFor(modelItem => item.Nome)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DataNascimento)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Contato)
             </td>
             <td>
@@ -51,13 +43,11 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Morada)
             </td>
+           
             <td>
-                @Html.DisplayFor(modelItem => item.CodigoPostal)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ProfessorId">Editar</a> |
-                <a asp-action="Details" asp-route-id="@item.ProfessorId">Detalhes</a> |
-                <a asp-action="Delete" asp-route-id="@item.ProfessorId">Eliminar</a>
+                <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.ProfessorId">Editar</a> |
+                <a class="btn btn-info" asp-action="Details" asp-route-id="@item.ProfessorId">Detalhes</a> |
+                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.ProfessorId">Deletar</a>
             </td>
         </tr>
 }
