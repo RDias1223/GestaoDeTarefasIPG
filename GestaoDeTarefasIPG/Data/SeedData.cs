@@ -14,6 +14,8 @@ namespace GestaoDeTarefasIPG.Data
         {
 
             SeedDataFuncionarios(db);
+            SeedDataProfessores(db);
+
 
 
 
@@ -21,23 +23,23 @@ namespace GestaoDeTarefasIPG.Data
 
 
         private static void SeedDataFuncionarios(GestaoDeTarefasDbContext db)
-        {   
+        {
             if (db.Funcionario.Any()) return;
 
             db.Funcionario.AddRange(
             new Funcionario
-                {
+            {
 
-                    Nome = "Fernando Fernandes",
-                    Endereco = " Resi Masculina 1 Rua Soeirov Viegas Nº6",
-                    CodigoPostal = "6300-758 GUARDA",
-                   Data_Nascimento = new DateTime(1990, 4, 19),
-                    Contacto = "912377773",
-                    Email = "FF_R45@gmail.com",
+                Nome = "Fernando Fernandes",
+                Endereco = " Resi Masculina 1 Rua Soeirov Viegas Nº6",
+                CodigoPostal = "6300-758 GUARDA",
+                Data_Nascimento = new DateTime(1990, 4, 19),
+                Contacto = "912377773",
+                Email = "FF_R45@gmail.com",
 
 
 
-                },
+            },
                  new Funcionario
                  {
 
@@ -144,7 +146,59 @@ namespace GestaoDeTarefasIPG.Data
                        }
                 );
 
-           db.SaveChanges();
+            db.SaveChanges();
+        }
+
+
+        private static void SeedDataProfessores(GestaoDeTarefasDbContext db)
+        {
+            if (db.Professor.Any()) return;
+
+            db.Professor.AddRange(
+            new Professor
+            {
+
+                Nome = "Joaquim Fernandes",
+                Morada = " Resi Masculina 1 Rua Soeirov Viegas Nº6",
+                CodigoPostal = "6300-758 GUARDA",
+                DataNascimento = new DateTime(1990, 4, 19),
+                Contato = "912377773",
+                Email = "FF_R45@gmail.com",
+
+
+
+            },
+                 new Professor
+                 {
+
+                     Nome = "Tiago Mota",
+                     Morada = "AV DA IGREJA  PORTO MOS SAO JOAO BAPTISTA PEDRO, LOTE R1 22 R/C ESQ.",
+                     CodigoPostal = ", 2480-301 LEIRIA",
+                     DataNascimento = new DateTime(1980, 4, 19),
+                     Contato = "916378987",
+                     Email = "tmota131@gmail.com",
+
+
+
+                 },
+                  new Professor
+                  {
+
+                      Nome = "Sérgio Cardoso",
+                      Morada = " R ELIAS GARCIA 228 SALA 7,  ARCOZELO BARCELOS",
+                      CodigoPostal = ",4750-144 BRAGA",
+                      DataNascimento = new DateTime(1989, 12, 19),
+                      Contato = "915678563",
+                      Email = "sergcArd34@hotmail.com",
+
+
+
+                  }
+                );
+
+            db.SaveChanges();
+
         }
     }
 }
+
