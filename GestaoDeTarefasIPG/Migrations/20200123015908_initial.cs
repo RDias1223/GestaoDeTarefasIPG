@@ -95,7 +95,7 @@ namespace GestaoDeTarefasIPG.Migrations
                     TarefaID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nome = table.Column<string>(nullable: false),
-                    Descrição = table.Column<string>(maxLength: 1000, nullable: true),
+                    Descricao = table.Column<string>(maxLength: 1000, nullable: true),
                     FuncionarioId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>

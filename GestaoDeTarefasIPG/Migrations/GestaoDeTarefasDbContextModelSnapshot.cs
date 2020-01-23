@@ -114,7 +114,7 @@ namespace GestaoDeTarefasIPG.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Descrição")
+                    b.Property<string>("Descricao")
                         .HasColumnType("nvarchar(1000)")
                         .HasMaxLength(1000);
 

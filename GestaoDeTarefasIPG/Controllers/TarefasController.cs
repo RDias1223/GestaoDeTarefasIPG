@@ -47,7 +47,7 @@ namespace GestaoDeTarefasIPG.Controllers
         // GET: Tarefas/Create
         public IActionResult Create()
         {
-            ViewData["FuncionarioId"] = new SelectList(_context.Funcionario, "FuncionarioId", "CodigoPostal");
+            ViewData["FuncionarioId"] = new SelectList(_context.Funcionario, "FuncionarioId", "Nome");
             return View();
         }
 
@@ -56,7 +56,7 @@ namespace GestaoDeTarefasIPG.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("TarefaID,Nome,Descrição,FuncionarioId")] Tarefa tarefa)
+        public async Task<IActionResult> Create([Bind("TarefaID,Nome,Descricao,FuncionarioId")] Tarefa tarefa)
         {
             if (ModelState.IsValid)
             {
@@ -64,7 +64,7 @@ namespace GestaoDeTarefasIPG.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["FuncionarioId"] = new SelectList(_context.Funcionario, "FuncionarioId", "CodigoPostal", tarefa.FuncionarioId);
+            ViewData["FuncionarioId"] = new SelectList(_context.Funcionario, "FuncionarioId", "Nome", tarefa.FuncionarioId);
             return View(tarefa);
         }
 
@@ -81,7 +81,7 @@ namespace GestaoDeTarefasIPG.Controllers
             {
                 return NotFound();
             }
-            ViewData["FuncionarioId"] = new SelectList(_context.Funcionario, "FuncionarioId", "CodigoPostal", tarefa.FuncionarioId);
+            ViewData["FuncionarioId"] = new SelectList(_context.Funcionario, "FuncionarioId", "Nome", tarefa.FuncionarioId);
             return View(tarefa);
         }
 
@@ -90,7 +90,7 @@ namespace GestaoDeTarefasIPG.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("TarefaID,Nome,Descrição,FuncionarioId")] Tarefa tarefa)
+        public async Task<IActionResult> Edit(int id, [Bind("TarefaID,Nome,Descricao,FuncionarioId")] Tarefa tarefa)
         {
             if (id != tarefa.TarefaID)
             {
@@ -117,7 +117,7 @@ namespace GestaoDeTarefasIPG.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["FuncionarioId"] = new SelectList(_context.Funcionario, "FuncionarioId", "CodigoPostal", tarefa.FuncionarioId);
+            ViewData["FuncionarioId"] = new SelectList(_context.Funcionario, "FuncionarioId", "Nome", tarefa.FuncionarioId);
             return View(tarefa);
         }
 

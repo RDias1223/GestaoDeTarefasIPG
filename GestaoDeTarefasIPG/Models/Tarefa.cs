@@ -15,7 +15,7 @@ namespace GestaoDeTarefasIPG.Models
 
         [StringLength(1000)]
         [Display(Name = "Descrição")]
-        public string Descrição { get; set; }
+        public string Descricao { get; set; }
 
         public int FuncionarioId { get; set; }
         public Funcionario Funcionario { get; set; }
