@@ -31,4 +31,6 @@ using GestaoDeTarefasIPG.Models;
         public DbSet<GestaoDeTarefasIPG.Models.Cargo> Cargo { get; set; }
 
         public DbSet<GestaoDeTarefasIPG.Models.Servico> Servico { get; set; }
+
+        public DbSet<GestaoDeTarefasIPG.Models.Tarefa> Tarefa { get; set; }
     }
