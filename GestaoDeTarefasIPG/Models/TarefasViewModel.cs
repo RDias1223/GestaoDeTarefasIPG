@@ -7,6 +7,7 @@ namespace GestaoDeTarefasIPG.Models
 {
     public class TarefasViewModel
     {
+        public IEnumerable<Funcionario> Funcionario { get; set; }
         public IEnumerable<Tarefa> Tarefa { get; set; }
         public PaginaViewModels Pagination { get; set; }
         public string CurrentName { get; set; }

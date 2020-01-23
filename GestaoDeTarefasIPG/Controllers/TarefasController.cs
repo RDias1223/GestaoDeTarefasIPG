@@ -10,7 +10,8 @@ using GestaoDeTarefasIPG.Models;
 namespace GestaoDeTarefasIPG.Controllers
 {
     public class TarefasController : Controller
-    {
+    {   private const int PAGE_SIZE = 3;
+
         private readonly GestaoDeTarefasDbContext _context;
 
         public TarefasController(GestaoDeTarefasDbContext context)
@@ -19,10 +20,71 @@ namespace GestaoDeTarefasIPG.Controllers
         }
 
         // GET: Tarefas
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(TarefasViewModel model = null, int pagina=1)
         {
-            var gestaoDeTarefasDbContext = _context.Tarefa.Include(t => t.Funcionario);
-            return View(await gestaoDeTarefasDbContext.ToListAsync());
+            string nome = null;
+
+            if (model != null && model.CurrentName != null)
+            {
+                nome = model.CurrentName;
+
+            }
+
+
+            IQueryable<Tarefa> tarefas;
+            int numTarefa;
+            IEnumerable<Tarefa> listTarefa;
+
+            if (!string.IsNullOrEmpty(nome))
+            {
+                tarefas = _context.Tarefa.Include(s => s.Funcionario)
+                .Where(p => p.Nome.Contains(nome.Trim()));
+
+                numTarefa = await tarefas.CountAsync();
+
+                listTarefa = await tarefas
+                    .OrderBy(p => p.Nome)
+                    .Skip(PAGE_SIZE * (pagina - 1))
+                    .Take(PAGE_SIZE)
+                    .ToListAsync();
+            }
+            else
+            {
+
+                tarefas = _context.Tarefa.Include(s => s.Funcionario);
+
+                numTarefa = await tarefas.CountAsync();
+
+                listTarefa = await tarefas
+                    .OrderBy(p => p.Nome)
+                    .Skip(PAGE_SIZE * (pagina - 1))
+                    .Take(PAGE_SIZE)
+                    .ToListAsync();
+
+            }
+
+            if (pagina > (numTarefa / PAGE_SIZE) + 1)
+            {
+                pagina = 1;
+            }
+
+            if (listTarefa.Count() == 0)
+            {
+                TempData["NoItemsFound"] = "Não foram encontrados resultados para está pesquisa";
+            }
+
+            return View(new TarefasViewModel
+            {
+                Tarefa = listTarefa,
+                Pagination = new PaginaViewModels
+                {
+                    PaginaCorrente = pagina,
+                    TamanhoPagina = PAGE_SIZE,
+                    TotalItens = numTarefa,
+                    Nome = nome
+                },
+            }
+            );
         }
 
         // GET: Tarefas/Details/5
