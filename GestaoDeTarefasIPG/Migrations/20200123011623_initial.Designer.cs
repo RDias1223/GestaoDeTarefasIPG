@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GestaoDeTarefasIPG.Migrations
 {
     [DbContext(typeof(GestaoDeTarefasDbContext))]
-    [Migration("20200122231252_initial")]
+    [Migration("20200123011623_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -109,6 +109,31 @@ namespace GestaoDeTarefasIPG.Migrations
                     b.ToTable("Servico");
                 });
 
+            modelBuilder.Entity("GestaoDeTarefasIPG.Models.Tarefa", b =>
+                {
+                    b.Property<int>("TarefaID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Descrição")
+                        .HasColumnType("nvarchar(1000)")
+                        .HasMaxLength(1000);
+
+                    b.Property<int>("FuncionarioId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("TarefaID");
+
+                    b.HasIndex("FuncionarioId");
+
+                    b.ToTable("Tarefa");
+                });
+
             modelBuilder.Entity("GestaoDeTarefasIPG.Models.UnidadeOrganizacional", b =>
                 {
                     b.Property<int>("UnidadeOrganizacionalID")
@@ -154,6 +179,15 @@ namespace GestaoDeTarefasIPG.Migrations
                     b.HasOne("GestaoDeTarefasIPG.Models.UnidadeOrganizacional", "UnidadeOrganizacional")
                         .WithMany()
                         .HasForeignKey("UnidadeOrganizacionalID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("GestaoDeTarefasIPG.Models.Tarefa", b =>
+                {
+                    b.HasOne("GestaoDeTarefasIPG.Models.Funcionario", "Funcionario")
+                        .WithMany()
+                        .HasForeignKey("FuncionarioId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
